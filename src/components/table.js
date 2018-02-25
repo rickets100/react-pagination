@@ -40,7 +40,8 @@ class Table extends Component {
   }
 
   get endIndex(){
-    return this.startIndex + this.state.pageSize
+    let onLastPage = (this.startIndex + this.state.pageSize) > this.numberOfItems
+    return (onLastPage) ?  (this.numberOfItems) : (this.startIndex + this.state.pageSize)
   }
 
   get numberOfPages() {
@@ -49,7 +50,7 @@ class Table extends Component {
     return Math.ceil(dataSize/pageSize)
   }
 
-  get getNumberOfItems() {
+  get numberOfItems() {
     return this.props.data.length-1
   }
 
@@ -116,7 +117,7 @@ class Table extends Component {
             {incrementOptions}
           </select>
           <i className="fas fa-sort-down fa-fw arrow"></i>
-          <span className="page-range">1-10</span><span> of </span><span>{this.getNumberOfItems}</span>
+          <span className="page-range">{this.startIndex} - {this.endIndex}</span><span> of </span><span>{this.numberOfItems}</span>
           <button onClick={() => this.pageBack()} disabled={!this.hasPreviousPage}><i id="prev-arrow" className="fas fa-angle-left arrow page-arrow"></i></button>
           <button onClick={() => this.pageForward()} disabled={!this.hasNextPage}><i id="next-arrow" className="fas fa-angle-right arrow page-arrow"></i></button>
         </div>
