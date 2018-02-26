@@ -10,7 +10,7 @@
   display: flex;
 }
 .container {
-  border: 1px solid dodgerblue;
+  // border: 1px solid dodgerblue;
 }
 
 .list-header {
@@ -57,10 +57,12 @@
   }
   .arrow {
     color: $blue-dropdown;
-
   }
   .page-arrow {
     font-size: 1rem;
+  }
+  i {
+    border: none;
   }
 }//pagination
 
@@ -73,11 +75,16 @@ table {
 .table-header {
   height: 32px;
   background-color: $grey-header;
-  border-radius: 3px 3px 0 0;
   text-align: left;
   font-size: .75rem;
   font-weight: 700;
   color: $purple-navbar;
+  &:first-of-type {
+    border-radius: 3px 0 0 0;
+  }
+  &:last-of-type {
+    border-radius: 0 3px 0 0;
+  }
 }
 
 tr {
