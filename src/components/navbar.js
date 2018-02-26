@@ -6,8 +6,6 @@ import './navbar.scss'
 class Navbar extends Component {
 
   render() {
-    console.log('\n^^^^^^^ IN NAVBAR RENDER ^^^^^^^');
-
     return (
       <div>
         <nav role="navigation" className="main-nav">

@@ -69,9 +69,10 @@
 
 // ===== TABLE BODY =====
 table {
+  width: 100%;
   border-collapse: collapse;
-
 }
+
 .table-header {
   height: 32px;
   background-color: $grey-header;
