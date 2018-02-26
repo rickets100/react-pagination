@@ -10,7 +10,13 @@ class Navbar extends Component {
 
     return (
       <div>
-        Hey there
+        <nav role="navigation" className="main-nav">
+          <ul id="main-nav-list" className="main-nav-list">
+            <li>Nav Item 1</li>
+            <li>Nav Item 2</li>
+            <li>Nav Item 3</li>
+          </ul>
+        </nav>
       </div>
     )
   }//render

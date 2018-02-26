@@ -1,2 +1,27 @@
 @import './_colors.scss';
 @import './_fonts.scss';
+
+.main-nav {
+  display: flex;
+  height: 50px;
+  margin-bottom: 25px;
+  background-color: $purple-navbar;
+
+  ul {
+    padding: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 0;
+    flex-basis: 50%;
+    list-style-type: none;
+    font: $font;
+    color: $grey-navbar;
+    font-size: .75rem;
+    font-weight: 400;
+    li {
+      padding: 0 20px;
+
+    }
+  }
+}
