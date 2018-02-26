@@ -131,12 +131,14 @@ class Table extends Component {
       // console.log('BEGIN, numberOfItems', newValue);
       // console.log('BEGIN, firstItemIndex', prevState.firstItemIndex);
       // console.log('BEGIN, lastItemIndex' ,prevState.firstItemIndex + newValue);
-      return {
+      let foo = {
         pageSize: newValue,
         pageIndex: targetPage,
         firstItemIndex: prevState.firstItemIndex,
-        lastItemIndex: prevState.firstItemIndex + newValue
+        lastItemIndex: Math.min(prevState.firstItemIndex + newValue, this.numberOfItems)
       }
+      console.log('foo:',foo)
+      return foo
     });
 
     // setTimeout(() =>{ //TODO: this can't be done here, race condition with above change
