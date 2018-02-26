@@ -12,9 +12,15 @@ class Navbar extends Component {
       <div>
         <nav role="navigation" className="main-nav">
           <ul id="main-nav-list" className="main-nav-list">
-            <li>Nav Item 1</li>
-            <li>Nav Item 2</li>
-            <li>Nav Item 3</li>
+            <li>
+              <a href="#">Nav Item 1</a>
+            </li>
+            <li>
+              <a href="#">Nav Item 2</a>
+            </li>
+            <li>
+              <a href="#">Nav Item 3</a>
+            </li>
           </ul>
         </nav>
       </div>
