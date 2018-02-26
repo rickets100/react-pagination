@@ -51,7 +51,7 @@ class Table extends Component {
   }//constructor
 
   get startIndex() {
-    console.log('IN STARTINDEX GETTER');
+    // console.log('IN STARTINDEX GETTER');
     // console.log("IN STARTINDEX: state.pageSize is", this.state.pageSize)
     // console.log("IN STARTINDEX. state.pageIndex is", this.state.pageIndex)
     // console.log("IN STARTINDEX: this.numberOfPages is", this.numberOfPages)
@@ -62,9 +62,7 @@ class Table extends Component {
   }
 
   get endIndex() {
-    console.log('IN ENDINDEX GETTER');
-    // console.log("endIndex", this.state.pageIndex, this.state.pageSize, this.numberOfPages)
-
+    // console.log('IN ENDINDEX GETTER');
     let onLastPage = (this.startIndex + this.state.pageSize) > this.numberOfItems
     if (onLastPage) {
       this.state.lastItemIndex = this.numberOfItems
@@ -75,29 +73,29 @@ class Table extends Component {
   }
 
   get numberOfPages() {
-    console.log('IN NUMBEROFPAGES GETTER');
+    // console.log('IN NUMBEROFPAGES GETTER');
     let dataSize = this.props.data.length-1
     let pageSize =  this.state.pageSize
     return Math.ceil(dataSize/pageSize)
   }
 
   get numberOfItems() {
-    console.log('IN NUMBEROFITEMS GETTER');
+    // console.log('IN NUMBEROFITEMS GETTER');
     return this.props.data.length
   }
 
   get hasNextPage() {
-    console.log('IN HASNEXTPAGE GETTER');
+    // console.log('IN HASNEXTPAGE GETTER');
     return (this.numberOfPages > this.state.pageIndex+1)
   }
 
   get hasPreviousPage() {
-    console.log('IN HASPREVIOUSPAGE GETTER');
+    // console.log('IN HASPREVIOUSPAGE GETTER');
     return (this.state.pageIndex > 0)
   }
 
   get currentPage() {
-    console.log('IN CURRENTPAGE GETTER');
+    // console.log('IN CURRENTPAGE GETTER');
     // console.log("ABOUT TO SLICE: this.startIndex:",this.startIndex)
     // console.log("ABOUT TO SLICE: this.endIndex:",this.endIndex)
     let foocurrPage = this.props.data.slice(this.firstItemIndex, this.lastItemIndex)
@@ -106,30 +104,38 @@ class Table extends Component {
   }
 
   boundPageIndex(val) {
-    console.log('IN BOUNDINDEX');
+    // console.log('IN BOUNDINDEX');
     // console.log("this.state.pageSize IS", this.state.pageSize)
     // console.log("boundPageIndex",val, this.numberOfPages)
     return Math.min(this.numberOfPages, Math.max(0, val))
   }
 
+  findPageByItemIndex(index, itemsPerPage) {
+    let page = Math.ceil(index/itemsPerPage)
+    console.log('in findPageByItemIndex, target page will be', page);
+    return page
+  }
 
   // ========== PAGINATION CONTROLS ==========
   changeSortOn(event) {
-    console.log('IN CHANGESORTON');
+    // console.log('IN CHANGESORTON');
     this.setState((prevState, props) => {
     });
   }//changeSortOn
 
   changeItemsPerPage(event) {
     let newValue = parseInt(event.target.value);
-    console.log('IN changeItemsPerPage');
-    console.log('newValue is', newValue);
-    // console.log("\nIN changeItemsPerPage. this.stage.pageSize is",this.state.pageSize)
-    // console.log("IN changeItemsPerPage. newValue is",newValue)
+    let targetPage = this.findPageByItemIndex(this.state.firstItemIndex, newValue)
+    console.log('targetpage', targetPage);
     this.setState((prevState, props) => {
-
+      // console.log('BEGIN, numberOfItems', newValue);
+      // console.log('BEGIN, firstItemIndex', prevState.firstItemIndex);
+      // console.log('BEGIN, lastItemIndex' ,prevState.firstItemIndex + newValue);
       return {
         pageSize: newValue,
+        pageIndex: targetPage,
+        firstItemIndex: prevState.firstItemIndex,
+        lastItemIndex: prevState.firstItemIndex + newValue
       }
     });
 
