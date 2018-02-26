@@ -1,19 +1,17 @@
 @import './_colors.scss';
 @import './_fonts.scss';
 
-html {
-  background-color: $white;
-}
-
-body {
+// ===== TABLE NAVIGATION =====
+.pagination {
   margin: 0;
-  display: flex;
-  justify-content: center;
   align-items: center;
   font-family: $font;
+  display: flex;
+}
+.container {
+  border: 1px solid dodgerblue;
 }
 
-// ===== TABLE NAVIGATION =====
 .list-header {
   background-color: $white;
   font-size: 1rem;
@@ -38,7 +36,7 @@ body {
   font-size: .75rem;
   font-weight: 600;
 }
-.sort-option {
+.sort-option, .per-page-option {
   color: $blue-dropdown;
   font-weight: 400;
 
