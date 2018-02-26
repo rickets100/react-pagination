@@ -12,10 +12,11 @@ class Table extends Component {
     this.changeSortOn = this.changeSortOn.bind(this);
 
     let {data, fields, headers, increments, pageIndex, pageSize, sortOn, sortDir} = this.props;
+    let firstItemIndex, lastItemIndex
+    let length = data.length
 
-    if (!fields && data.length > 0){
+    if (!fields && (length > 0)){
       fields = Object.keys(data[0])
-      // TODO: need to choose appropriate "sort on" field here
     }
 
     if (!sortOn) {
@@ -26,11 +27,18 @@ class Table extends Component {
       headers = fields.slice(0)
     }
 
-    let lastItemIndex = (this.props.pageSize * this.props.pageIndex)
+    if (!pageIndex) {
+      firstItemIndex = 0;
+      lastItemIndex = Math.min(pageSize, length)
+    } else {
+      let onLastPage = ((pageIndex * pageSize) + pageSize) > length
+      firstItemIndex = pageSize * pageIndex
+      lastItemIndex = (onLastPage) ? (length) : (pageSize + firstItemIndex)
+    }
 
     this.state = {
       fields:           fields,
-      firstItemIndex:   0,
+      firstItemIndex:   firstItemIndex,
       lastItemIndex:    lastItemIndex,
       headers:          headers,
       increments:       increments,
@@ -42,7 +50,6 @@ class Table extends Component {
 
   }//constructor
 
-
   get startIndex() {
     console.log('IN STARTINDEX GETTER');
     // console.log("IN STARTINDEX: state.pageSize is", this.state.pageSize)
@@ -50,13 +57,20 @@ class Table extends Component {
     // console.log("IN STARTINDEX: this.numberOfPages is", this.numberOfPages)
     // console.log('+++++++++++++++++++++++++++++++++++++++++');
     // console.log('this.numberOfPages*this.state.pageSize:',
+    this.state.firstItemIndex = this.state.pageIndex*this.state.pageSize
     return this.state.pageIndex*this.state.pageSize
   }
 
   get endIndex() {
     console.log('IN ENDINDEX GETTER');
     // console.log("endIndex", this.state.pageIndex, this.state.pageSize, this.numberOfPages)
+
     let onLastPage = (this.startIndex + this.state.pageSize) > this.numberOfItems
+    if (onLastPage) {
+      this.state.lastItemIndex = this.numberOfItems
+    } else {
+      this.state.lastItemIndex = this.state.firstItemIndex + this.state.pageSize
+    }
     return (onLastPage) ?  (this.numberOfItems) : (this.startIndex + this.state.pageSize)
   }
 
@@ -69,7 +83,7 @@ class Table extends Component {
 
   get numberOfItems() {
     console.log('IN NUMBEROFITEMS GETTER');
-    return this.props.data.length-1
+    return this.props.data.length
   }
 
   get hasNextPage() {
@@ -86,6 +100,7 @@ class Table extends Component {
     console.log('IN CURRENTPAGE GETTER');
     // console.log("ABOUT TO SLICE: this.startIndex:",this.startIndex)
     // console.log("ABOUT TO SLICE: this.endIndex:",this.endIndex)
+    let foocurrPage = this.props.data.slice(this.firstItemIndex, this.lastItemIndex)
     let currPage = this.props.data.slice(this.startIndex, this.endIndex)
     return currPage
   }
@@ -185,22 +200,24 @@ class Table extends Component {
     return (
       <div>
         <div className="pagination">
-        <div className="container">
-          <span className ="list-header">List of Awesome </span>
-          <label htmlFor="sort-type" className="sort-type-label">Sort by: </label>
-          <select id="sort-type" className="sort-type" onChange={this.changeSortOn}>
-            {sortOptions}
-          </select>
-          <i className="fas fa-sort-down fa-fw arrow"></i>
-          <label htmlFor="per-page" className="per-page-label">Items per page:</label>
-          <select id="per-page" className="per-page" value={this.state.pageSize} onChange={this.changeItemsPerPage}>
-          {incrementOptions}
-          </select>
+          <div className="container">
+            <span className ="list-header">List of Awesome </span>
+            <label htmlFor="sort-type" className="sort-type-label">Sort by: </label>
+            <select id="sort-type" className="sort-type" onChange={this.changeSortOn}>
+              {sortOptions}
+            </select>
+            <i className="fas fa-sort-down fa-fw arrow"></i>
+            <label htmlFor="per-page" className="per-page-label">Items per page:</label>
+            <select id="per-page" className="per-page" value={this.state.pageSize} onChange={this.changeItemsPerPage}>
+            {incrementOptions}
+            </select>
 
-          <i className="fas fa-sort-down fa-fw arrow"></i>
-          <span className="page-range">{this.startIndex} - {this.endIndex}</span><span>  of </span><span>{this.numberOfItems}</span>
-          <button onClick={() => this.pageBack()} disabled={!this.hasPreviousPage}><i id="prev-arrow" className="fas fa-angle-left arrow page-arrow"></i></button>
-          <button onClick={() => this.pageForward()} disabled={!this.hasNextPage}><i id="next-arrow" className="fas fa-angle-right arrow page-arrow"></i></button>
+            <i className="fas fa-sort-down fa-fw arrow"></i>
+            <span className="page-range">{this.startIndex} - {this.endIndex}</span><span>  of </span><span>{this.numberOfItems}</span>
+            <button onClick={() => this.pageBack()} disabled={!this.hasPreviousPage}><i id="prev-arrow" className="fas fa-angle-left arrow page-arrow"></i></button>
+            <button onClick={() => this.pageForward()} disabled={!this.hasNextPage}><i id="next-arrow" className="fas fa-angle-right arrow page-arrow"></i></button>
+            <span className="page-range">{this.state.firstItemIndex} - {this.state.lastItemIndex}</span><span>  of </span><span>{this.numberOfItems}</span>
+
           </div>
         </div>
         <table>

@@ -1,3 +1,47 @@
+/*
+let userData = [{
+  firstName: 'First Person',
+  lastName: 'Borgetti',
+  country: 'USA',
+  address: '2234 3rd Ave Ste 3',
+  city: 'Seattle',
+  state: 'WA',
+  zip: '98101',
+  phone: '206-778-5741'
+},
+{
+  firstName: 'Second Person',
+  lastName: 'Donovan',
+  country: 'USA',
+  address: '18400 S Avalon Blvd',
+  city: 'Carson',
+  state: 'CA',
+  zip: '90746',
+  phone: '310-630-2200'
+},
+{
+  firstName: 'Third Person',
+  lastName: 'Payne',
+  country: 'USA',
+  address: '2234 3rd Ave Ste 3',
+  city: 'Pullman',
+  state: 'WA',
+  zip: '99000',
+  phone: '444-778-5741'
+},
+{
+  firstName: 'Fourth Person',
+  lastName: 'Calhoun',
+  country: 'USA',
+  address: '18400 S Avalon Blvd',
+  city: 'Des Moines',
+  state: 'IA',
+  zip: '90746',
+  phone: '123-630-2200'
+}]
+
+*/
+
 let userData = [
   {
     firstName: 'First Person',
@@ -769,4 +813,5 @@ let userData = [
     phone: '310-630-2200'
   }
 ];
+
 export default userData;
