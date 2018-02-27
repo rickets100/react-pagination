@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: table.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: table.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
+import './app.scss'
+import './table.scss'
+
+
+/**
+ *
+ */
+class Table extends Component {
+  constructor(props) {
+    super(props)
+
+    this.onChangeItemsPerPage = this.onChangeItemsPerPage.bind(this)
+    this.onChangeSort = this.onChangeSort.bind(this)
+    this.pageBack = this.pageBack.bind(this)
+    this.pageForward = this.pageForward.bind(this)
+
+    let {data, fields, headers, increments, pageIndex, pageSize, sortOn, sortDir} = this.props;
+    let firstItemNum, lastItemNum
+    let length = data.length
+
+    if (!fields &amp;&amp; (length > 0)){
+      fields = Object.keys(data[0])
+    }
+
+    if (!sortOn) {
+      sortOn = fields[0]
+    }
+
+    if (!headers) {
+      headers = fields.slice(0)
+    }
+
+    if (!pageIndex) {
+      firstItemNum = 1;
+      lastItemNum = Math.min(pageSize, length)
+    } else {
+      let onLastPage = ((pageIndex * pageSize) + pageSize) > length
+      firstItemNum = (pageSize * pageIndex) + 1
+      lastItemNum = (onLastPage) ? (length) : (pageSize + firstItemNum)
+    }
+
+    this.state = {
+      fields:           fields,
+      firstItemNum:   firstItemNum,
+      lastItemNum:    lastItemNum,
+      headers:          headers,
+      increments:       increments,
+      pageIndex:        pageIndex,
+      pageSize:         pageSize,
+      sortOn:           sortOn,
+      sortDir:          sortDir
+    }
+  }//constructor
+
+
+  /**
+   * get numberOfPages - description
+   *
+   * @return {Number}  description
+   */
+  get numberOfPages() {
+    let dataSize = this.props.data.length-1
+    let pageSize =  this.state.pageSize
+    return Math.ceil(dataSize/pageSize)
+  }
+
+  get numberOfItems() {
+    return this.props.data.length
+  }
+
+  get hasNextPage() {
+    return (this.numberOfPages > this.state.pageIndex+1)
+  }
+
+  get hasPreviousPage() {
+    return (this.state.pageIndex > 0)
+  }
+
+  get currentPage() {
+    //TODO: add type support for type?
+    console.log("this.state.sortOn",this.state.sortOn)
+    let fieldName = this.state.sortOn
+    let clone = this.props.data.slice(0)
+    let sortDir = this.state.sortDir
+
+    clone.sort(function (a, b) {
+      // console.log('fieldName:', fieldName)
+      let x, y
+      (sortDir == 'asc') ? [x, y] = [a, b] : [x, y] = [b, a]
+      // console.log('x:', x, 'y', y);
+      if (x[fieldName] &lt; y[fieldName]) {
+        return -1
+      }
+      if (x[fieldName] > y[fieldName]) {
+        return 1
+      }
+      return 0
+    })
+    console.log("headers", this.state.headers)
+    console.log("------sortOn",this.state.sortOn)
+    console.log("sortDir", sortDir)
+
+    let currPage = clone.slice(this.state.firstItemNum-1, this.state.lastItemNum)
+    return currPage
+  }
+
+
+  /**
+   * boundPageIndex - description
+   *
+   * @param  {type} val description
+   * @return {Number}     description
+   */
+  boundPageIndex(val) {
+    return Math.min(this.numberOfPages, Math.max(0, val))
+  }
+
+  /**
+   * findPageByItemIndex - returns the page index that contains a given item index,
+   * based on the given items per page
+   *
+   * @param  {Number} index         the index of the item
+   * @param  {Number} itemsPerPage  the number of items per page
+   * @return {Number}               the index of the page that item would exist on
+   */
+  findPageByItemIndex(index, itemsPerPage) {
+    let page = Math.ceil(index/itemsPerPage)
+    return page
+  }
+
+  updateState(){
+    let onLastPage = ((this.state.pageIndex * this.state.pageSize) + this.state.pageSize) > this.props.data.length
+    let firstItemIndex = (this.state.pageSize * this.state.pageIndex)
+    let firstItemNum = firstItemIndex + 1
+    let lastItemNum = (onLastPage) ? (this.props.data.length) : (firstItemIndex + this.state.pageSize)
+
+    this.setState(() =>{
+      return {
+        fields:           this.state.fields,
+        firstItemNum:     firstItemNum,
+        lastItemNum:      lastItemNum,
+        headers:          this.state.headers,
+        increments:       this.state.increments,
+        pageIndex:        this.state.pageIndex,
+        pageSize:         this.state.pageSize,
+        sortOn:           this.state.sortOn,
+        sortDir:          this.state.sortDir
+      }
+    })
+  }
+
+
+  // ========== PAGINATION CONTROLS ==========
+  onChangeSort(event) {
+    let index = event.target.value
+    let fieldName = this.state.fields[index]
+    this.state.sortOn = fieldName
+    this.state.sortDir = 'asc'
+    this.updateState()
+  }//changeSortOn
+
+  onHeaderClick(index){
+      console.log("onHeaderClick",index)
+      let headerName = this.state.headers[index]
+      let fieldName = this.state.fields[index]
+      if(this.state.sortOn == fieldName) {
+        this.state.sortDir = (this.state.sortDir == 'asc')? 'desc' : 'asc'
+        console.log(`already sorted on ${fieldName} flip`)
+      }else{
+        this.state.sortOn = fieldName
+        this.state.sortDir = 'asc'
+        console.log(`${fieldName} is new sort`)
+      }
+      this.updateState()
+  }
+
+  onChangeItemsPerPage(event) {
+    this.state.pageSize = parseInt(event.target.value);
+    let targetPage = this.findPageByItemIndex(this.state.firstItemNum, this.state.pageSize)
+    this.state.pageIndex = targetPage - 1
+    this.updateState()
+  }//changeItemsPerPage
+
+  pageBack() {
+    this.state.pageIndex = this.boundPageIndex(this.state.pageIndex - 1)
+    this.updateState()
+  }//pageBack
+
+  pageForward() {
+    // console.log("pageForward 1 ", this.state.pageIndex)
+    this.state.pageIndex = this.boundPageIndex(this.state.pageIndex + 1)
+    this.updateState()
+  }//pageForward
+
+
+  render() {
+    let { data } = this.props;
+    let dataSize = data.length-1
+    let page = this.currentPage
+    let headerCells = []
+
+    // ========== FORMULATE LISTBOX OPTIONS ==========
+    let incrementOptions = this.state.increments.map((increment, i) => {
+      return &lt;option key={'incrementOption'+i} value={increment} className="per-page-option">{increment}&lt;/option>
+    })
+
+    let sortOptions = this.state.headers.map((header, i) => {
+      return &lt;option key={'sortOption'+i} value={i} className="sort-option">{header}&lt;/option>
+    })
+
+    // ========== FORMULATE HEADERS ==========
+    for (let i=0; i&lt;this.state.headers.length; i++) {
+      let header = this.state.headers[i]
+      headerCells.push(&lt;th
+          className="table-header"
+          key={"header"+header+i}
+          onClick={()=>{this.onHeaderClick(i)}}>{header}&lt;/th>)
+    }
+    let tableHeaderData = &lt;tr key="table-header">{headerCells}&lt;/tr>
+
+
+    // ========== FORMULATE ROWS ==========
+    let tableRowData = page.map((obj, i) => {
+      let cells = []
+
+      for(let i=0; i&lt;this.state.fields.length; i++) {
+        let field = this.state.fields[i]
+        cells.push(&lt;td key={field+i}>{obj[field]}&lt;/td>)
+      }
+
+      return &lt;tr key={i}>{cells}&lt;/tr>
+    })//map
+
+
+    return (
+      &lt;div>
+        pageIndex: {this.state.pageIndex}&lt;br/>
+        pageSize: {this.state.pageSize}&lt;br/>
+        firstItemNum: {this.state.firstItemNum}&lt;br/>
+        lastItemNum: {this.state.lastItemNum}&lt;br/>
+        this.state.sortDir: {this.state.sortDir}&lt;br/>
+        &lt;div className="pagination">
+          &lt;div className="container">
+            &lt;span className ="list-header">List of Awesome &lt;/span>
+            &lt;label htmlFor="sort-type" className="sort-type-label">Sort by: &lt;/label>
+            &lt;select id="sort-type" className="sort-type" value={this.state.fields.indexOf(this.state.sortOn)} onChange={this.onChangeSort}>
+              {sortOptions}
+            &lt;/select>
+            &lt;i className="fas fa-sort-down fa-fw arrow">&lt;/i>
+            &lt;label htmlFor="per-page" className="per-page-label">Items per page:&lt;/label>
+            &lt;select id="per-page" className="per-page" value={this.state.pageSize} onChange={this.onChangeItemsPerPage}>
+            {incrementOptions}
+            &lt;/select>
+
+            &lt;i className="fas fa-sort-down fa-fw arrow">&lt;/i>
+            &lt;span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}&lt;/span>&lt;span>  of &lt;/span>&lt;span>{this.numberOfItems}&lt;/span>
+            &lt;button onClick={this.pageBack} disabled={!this.hasPreviousPage}>&lt;i id="prev-arrow" className="fas fa-angle-left arrow page-arrow">&lt;/i>&lt;/button>
+            &lt;button onClick={this.pageForward} disabled={!this.hasNextPage}>&lt;i id="next-arrow" className="fas fa-angle-right arrow page-arrow">&lt;/i>&lt;/button>
+
+          &lt;/div>
+        &lt;/div>
+        &lt;table>
+          &lt;thead>
+            {tableHeaderData}
+          &lt;/thead>
+          &lt;tbody>
+            {tableRowData}
+          &lt;/tbody>
+        &lt;/table>
+      &lt;/div>
+    )
+  }//render
+
+} //class Table
+
+Table.defaultProps = {
+  data: [],
+  fields: null,
+  sortOn: null,
+  sortDir: 'asc',
+  headers: null,
+  pageSize: 10,
+  pageIndex: 0
+};
+
+export default Table
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Table.html">Table</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Feb 26 2018 22:41:48 GMT-0800 (PST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
