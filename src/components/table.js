@@ -94,9 +94,9 @@ class Table extends Component {
   }
 
   /**
-   * get currentPage - description
+   * get currentPage -forms a selection of the dataset, based on the current page size and sort criteria
    *
-   * @return {Array}  description   
+   * @return {Array}  the items from the dataset that are currently in view
    */
   get currentPage() {
     let clone = this.props.data.slice(0)
@@ -118,13 +118,13 @@ class Table extends Component {
 
     let currPage = clone.slice(this.state.firstItemNum-1, this.state.lastItemNum)
     return currPage
-  }
+  //currentPage
 
 
   /**
    * boundPageIndex - this limits the page index to no more than the total number of pages, and no less than the first page
    *
-   * @param  {type}   val a page index
+   * @param  {Number}   val a page index
    * @return {Number}     a page index
    */
   boundPageIndex(val) {
@@ -145,13 +145,18 @@ class Table extends Component {
     return page
   }
 
-  updateState(){
+  /**
+   * updateState - description
+   *
+   * @return {type}  description
+   */
+  updateState() {
     let onLastPage = ((this.state.pageIndex * this.state.pageSize) + this.state.pageSize) > this.props.data.length
     let firstItemIndex = (this.state.pageSize * this.state.pageIndex)
     let firstItemNum = firstItemIndex + 1
     let lastItemNum = (onLastPage) ? (this.props.data.length) : (firstItemIndex + this.state.pageSize)
 
-    this.setState(() =>{
+    this.setState(() => {
       return {
         fields:           this.state.fields,
         firstItemNum:     firstItemNum,
