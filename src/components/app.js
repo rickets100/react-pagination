@@ -17,7 +17,7 @@ class App extends Component {
               headers = {['First Name', 'Last Name', 'Country', 'Address', 'City', 'State', 'Zip', 'Phone']}
               increments={[5, 10, 25, 50, 75, 100]}
               pageIndex={0}
-              pageSize={25}
+              pageSize={10}
             />
           </div>;
   }//render

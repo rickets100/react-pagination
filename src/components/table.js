@@ -12,7 +12,7 @@ class Table extends Component {
     this.changeSortOn = this.changeSortOn.bind(this);
 
     let {data, fields, headers, increments, pageIndex, pageSize, sortOn, sortDir} = this.props;
-    let firstItemIndex, lastItemIndex
+    let firstItemNum, lastItemNum
     let length = data.length
 
     if (!fields && (length > 0)){
@@ -28,18 +28,20 @@ class Table extends Component {
     }
 
     if (!pageIndex) {
-      firstItemIndex = 0;
-      lastItemIndex = Math.min(pageSize, length)
+      firstItemNum = 1;
+      lastItemNum = Math.min(pageSize, length)
     } else {
       let onLastPage = ((pageIndex * pageSize) + pageSize) > length
-      firstItemIndex = pageSize * pageIndex
-      lastItemIndex = (onLastPage) ? (length) : (pageSize + firstItemIndex)
+      firstItemNum = (pageSize * pageIndex) + 1
+      lastItemNum = (onLastPage) ? (length) : (pageSize + firstItemNum)
     }
+    console.log('originally, firstItemNum is', firstItemNum);
+    console.log('originally, lastItemNum is', lastItemNum);
 
     this.state = {
       fields:           fields,
-      firstItemIndex:   firstItemIndex,
-      lastItemIndex:    lastItemIndex,
+      firstItemNum:   firstItemNum,
+      lastItemNum:    lastItemNum,
       headers:          headers,
       increments:       increments,
       pageIndex:        pageIndex,
@@ -50,16 +52,18 @@ class Table extends Component {
   }//constructor
 
   get startIndex() {
-    this.state.firstItemIndex = this.state.pageIndex*this.state.pageSize
+    console.log("WAS", this.state.firstItemNum)
+    this.state.firstItemNum = this.state.pageIndex*this.state.pageSize
+    console.log("NOW", this.state.firstItemNum)
     return this.state.pageIndex*this.state.pageSize
   }
 
   get endIndex() {
     let onLastPage = (this.startIndex + this.state.pageSize) > this.numberOfItems
     if (onLastPage) {
-      this.state.lastItemIndex = this.numberOfItems
+      this.state.lastItemNum = this.numberOfItems
     } else {
-      this.state.lastItemIndex = this.state.firstItemIndex + this.state.pageSize
+      this.state.lastItemNum = this.state.firstItemNum + this.state.pageSize
     }
     return (onLastPage) ?  (this.numberOfItems) : (this.startIndex + this.state.pageSize)
   }
@@ -83,7 +87,7 @@ class Table extends Component {
   }
 
   get currentPage() {
-    let foocurrPage = this.props.data.slice(this.firstItemIndex, this.lastItemIndex)
+    let foocurrPage = this.props.data.slice(this.firstItemNum, this.lastItemNum)
     let currPage = this.props.data.slice(this.startIndex, this.endIndex)
     return currPage
   }
@@ -108,14 +112,15 @@ class Table extends Component {
 
   changeItemsPerPage(event) {
     let newValue = parseInt(event.target.value);
-    let targetPage = this.findPageByItemIndex(this.state.firstItemIndex, newValue)
+    console.log('-----this.state.firstItemNum', this.state.firstItemNum);
+    let targetPage = this.findPageByItemIndex(this.state.firstItemNum, newValue)
     console.log('targetpage', targetPage);
     this.setState((prevState, props) => {
       let foo = {
         pageSize: newValue,
         pageIndex: targetPage,
-        firstItemIndex: prevState.firstItemIndex,
-        lastItemIndex: Math.min(prevState.firstItemIndex + newValue, this.numberOfItems)
+        firstItemNum: prevState.firstItemNum,
+        lastItemNum: Math.min(prevState.firstItemNum + newValue, this.numberOfItems)
       }
       console.log('foo:',foo)
       return foo
@@ -176,6 +181,7 @@ class Table extends Component {
         let field = this.state.fields[i];
         cells.push(<td key={field+i}>{obj[field]}</td>)
       }
+
       return <tr key={i}>{cells}</tr>;
     })//map
 
@@ -196,10 +202,9 @@ class Table extends Component {
             </select>
 
             <i className="fas fa-sort-down fa-fw arrow"></i>
-            <span className="page-range">{this.startIndex} - {this.endIndex}</span><span>  of </span><span>{this.numberOfItems}</span>
+            <span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}</span><span>  of </span><span>{this.numberOfItems}</span>
             <button onClick={() => this.pageBack()} disabled={!this.hasPreviousPage}><i id="prev-arrow" className="fas fa-angle-left arrow page-arrow"></i></button>
             <button onClick={() => this.pageForward()} disabled={!this.hasNextPage}><i id="next-arrow" className="fas fa-angle-right arrow page-arrow"></i></button>
-            <span className="page-range">{this.state.firstItemIndex} - {this.state.lastItemIndex}</span><span>  of </span><span>{this.numberOfItems}</span>
 
           </div>
         </div>
