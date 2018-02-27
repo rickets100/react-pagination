@@ -75,7 +75,8 @@ class Table extends Component {
   }
 
   /**
-   * get hasNextPage - checks to see whether there are more pages after the one currently in view. For use in disabling/enabling the forward chevron.
+   * get hasNextPage - checks to see whether there are more pages after the one
+   * currently in view. For use in disabling/enabling the forward chevron.
    *
    * @return {Boolean}  Is the total number of pages greater than the index of the
    * current page?
@@ -94,7 +95,8 @@ class Table extends Component {
   }
 
   /**
-   * get currentPage -forms a selection of the dataset, based on the current page size and sort criteria
+   * get currentPage -forms a selection of the dataset, based on the current page
+   * size and sort criteria
    *
    * @return {Array}  the items from the dataset that are currently in view
    */
@@ -118,7 +120,7 @@ class Table extends Component {
 
     let currPage = clone.slice(this.state.firstItemNum-1, this.state.lastItemNum)
     return currPage
-  //currentPage
+  }
 
 
   /**
@@ -179,7 +181,7 @@ class Table extends Component {
     this.state.sortOn = fieldName
     this.state.sortDir = 'asc'
     this.updateState()
-  }//changeSortOn
+  }
 
   onHeaderClick(index) {
     let headerName = this.state.headers[index]
@@ -198,17 +200,17 @@ class Table extends Component {
     let targetPage = this.findPageByItemIndex(this.state.firstItemNum, this.state.pageSize)
     this.state.pageIndex = targetPage - 1
     this.updateState()
-  }//onChangeItemsPerPage
+  }
 
   pageBack() {
     this.state.pageIndex = this.boundPageIndex(this.state.pageIndex - 1)
     this.updateState()
-  }//pageBack
+  }
 
   pageForward() {
     this.state.pageIndex = this.boundPageIndex(this.state.pageIndex + 1)
     this.updateState()
-  }//pageForward
+  }
 
 
   render() {
