@@ -1,34 +1,5 @@
 /*
-let userData = [{
-  firstName: 'First Person',
-  lastName: 'Borgetti',
-  country: 'USA',
-  address: '2234 3rd Ave Ste 3',
-  city: 'Seattle',
-  state: 'WA',
-  zip: '98101',
-  phone: '206-778-5741'
-},
-{
-  firstName: 'Second Person',
-  lastName: 'Donovan',
-  country: 'USA',
-  address: '18400 S Avalon Blvd',
-  city: 'Carson',
-  state: 'CA',
-  zip: '90746',
-  phone: '310-630-2200'
-},
-{
-  firstName: 'Third Person',
-  lastName: 'Payne',
-  country: 'USA',
-  address: '2234 3rd Ave Ste 3',
-  city: 'Pullman',
-  state: 'WA',
-  zip: '99000',
-  phone: '444-778-5741'
-},
+let userData = [
 {
   firstName: 'Fourth Person',
   lastName: 'Calhoun',
@@ -39,97 +10,96 @@ let userData = [{
   zip: '90746',
   phone: '123-630-2200'
 }]
-
 */
 
 let userData = [
   {
-    firstName: 'First Person',
+    firstName: '01st Person',
     lastName: 'Packard',
     country: 'USA',
     address: '2234 3rd Ave Ste 3',
     city: 'Seattle',
     state: 'WA',
-    zip: '98101',
+    zip: 98101,
     phone: '206-778-5741'
   },
   {
-    firstName: 'Second Person',
+    firstName: '02nd Person',
     lastName: 'Donovan',
     country: 'USA',
     address: '18400 S Avalon Blvd',
     city: 'Carson',
     state: 'CA',
-    zip: '90746',
+    zip: 90746,
     phone: '310-630-2200'
   },
   {
-    firstName: 'Third Person',
+    firstName: '03rd Person',
     lastName: 'Payne',
     country: 'USA',
     address: '2234 3rd Ave Ste 3',
     city: 'Pullman',
     state: 'WA',
-    zip: '99000',
+    zip: 99000,
     phone: '444-778-5741'
   },
   {
-    firstName: 'Fourth Person',
+    firstName: '04th Person',
     lastName: 'Calhoun',
     country: 'USA',
     address: '18400 S Avalon Blvd',
     city: 'Des Moines',
     state: 'IA',
-    zip: '90746',
+    zip: 90746,
     phone: '123-630-2200'
   },
   {
-    firstName: 'Fifth Person',
+    firstName: '05th Person',
     lastName: 'Russell',
     country: 'USA',
     address: '2234 3rd Ave Ste 3',
     city: 'Columbus',
     state: 'OH',
-    zip: '98101',
+    zip: 98101,
     phone: '206-778-5741'
   },
   {
-    firstName: 'Sixth Person',
+    firstName: '06th Person',
     lastName: 'Donovan',
     country: 'USA',
     address: '18400 S Avalon Blvd',
     city: 'Carson',
     state: 'CA',
-    zip: '90746',
+    zip: 90746,
     phone: '310-630-2200'
   },
-    {firstName: '7th person',
+    {firstName: '07th person',
     lastName: 'Hawthorne',
     country: 'USA',
     address: '2234 3rd Ave Ste 3',
     city: 'Seattle',
     state: 'WA',
-    zip: '98101',
+    zip: 98101,
     phone: '206-778-5741'
   },
   {
-    firstName: '8th person',
+    firstName: '08th person',
     lastName: 'Meyers',
     country: 'Canada',
     address: '18400 S Avalon Blvd',
     city: 'Victoria',
     state: 'BC',
-    zip: '90746',
+    zip: 90746,
     phone: '310-630-2200'
   },
   {
-    firstName: '9th person',
+    firstName: '09th person',
     lastName: 'Coelho',
     country: 'USA',
     address: '2234 3rd Ave Ste 3',
     city: 'Salem',
     state: 'OR',
-    zip: '45678',
+    zip: 45678,
     phone: '206-778-5741'
   },
   {
@@ -139,7 +109,7 @@ let userData = [
     address: '18400 S Avalon Blvd',
     city: 'Carson',
     state: 'CA',
-    zip: '90746',
+    zip: 90746,
     phone: '310-630-2200'
   },
   {
@@ -149,7 +119,7 @@ let userData = [
     address: '2234 3rd Ave Ste 3',
     city: 'Monreal',
     state: 'Quebec',
-    zip: 'G8F 2D1',
+    zip: 45678,
     phone: '654-321-5741'
   },
   {
@@ -793,23 +763,23 @@ let userData = [
     phone: "+1 (843) 542-2343"
   },
   {
-    firstName: 'Next-to-Last Person',
+    firstName: 'ZZ Next-to-Last Person',
     lastName: 'Price',
     country: 'USA',
     address: '2234 3rd Ave Ste 3',
     city: 'Seattle',
     state: 'WA',
-    zip: '98101',
+    zip: 98101,
     phone: '206-778-5741'
   },
   {
-    firstName: 'Last Person',
+    firstName: 'ZZZ Last Person',
     lastName: 'Donovan',
     country: 'USA',
     address: '18400 S Avalon Blvd',
     city: 'Carson',
     state: 'CA',
-    zip: '90746',
+    zip: 90746,
     phone: '310-630-2200'
   }
 ];

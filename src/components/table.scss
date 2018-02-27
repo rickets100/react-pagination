@@ -49,6 +49,26 @@
 .pagination {
   font-size: .875rem;
   color: $purple-labels;
+  display: flex;
+
+  .container {
+    border: 1px solid orange;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
+
+    .left-controls {
+      border: 1px solid dodgerblue;
+      margin: 5px 0 5px 0;
+      display: flex;
+    }
+    .right-controls {
+      border: 1px solid dodgerblue;
+      margin: 5px 0 5px 0;
+      display: flex;
+    }
+  }
   &.bold {
     font-weight: 700;
   }
@@ -64,6 +84,8 @@
   button {
     border: none;
   }
+
+
 }//pagination
 
 

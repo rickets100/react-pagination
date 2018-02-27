@@ -12,8 +12,8 @@ class Table extends Component {
 
     this.onChangeItemsPerPage = this.onChangeItemsPerPage.bind(this)
     this.onChangeSort = this.onChangeSort.bind(this)
-    this.pageBack = this.pageBack.bind(this)
-    this.pageForward = this.pageForward.bind(this)
+    this.onPageBack = this.onPageBack.bind(this)
+    this.onPageForward = this.onPageForward.bind(this)
 
     let {data, fields, headers, increments, pageIndex, pageSize, sortOn, sortDir} = this.props
     let firstItemNum, lastItemNum
@@ -124,10 +124,11 @@ class Table extends Component {
 
 
   /**
-   * boundPageIndex - this limits the page index to no more than the total number of pages, and no less than the first page
+   * boundPageIndex - this limits the page index to no more than the total number of
+   * pages, and no less than the first page
    *
    * @param  {Number}   val a page index
-   * @return {Number}     a page index
+   * @return {Number}       a page index
    */
   boundPageIndex(val) {
     return Math.min(this.numberOfPages, Math.max(0, val))
@@ -202,12 +203,12 @@ class Table extends Component {
     this.updateState()
   }
 
-  pageBack() {
+  onPageBack() {
     this.state.pageIndex = this.boundPageIndex(this.state.pageIndex - 1)
     this.updateState()
   }
 
-  pageForward() {
+  onPageForward() {
     this.state.pageIndex = this.boundPageIndex(this.state.pageIndex + 1)
     this.updateState()
   }
@@ -238,7 +239,6 @@ class Table extends Component {
     }
     let tableHeaderData = <tr key="table-header">{headerCells}</tr>
 
-
     // ========== FORMULATE ROWS ==========
     let tableRowData = page.map((obj, i) => {
       let cells = []
@@ -261,21 +261,27 @@ class Table extends Component {
         this.state.sortDir: {this.state.sortDir}<br/>
         <div className="pagination">
           <div className="container">
-            <span className ="list-header">List of Awesome </span>
-            <label htmlFor="sort-type" className="sort-type-label">Sort by: </label>
-            <select id="sort-type" className="sort-type" value={this.state.fields.indexOf(this.state.sortOn)} onChange={this.onChangeSort}>
-              {sortOptions}
-            </select>
-            <i className="fas fa-sort-down fa-fw arrow"></i>
-            <label htmlFor="per-page" className="per-page-label">Items per page:</label>
-            <select id="per-page" className="per-page" value={this.state.pageSize} onChange={this.onChangeItemsPerPage}>
-            {incrementOptions}
-            </select>
+            <div className="left-controls">
+              <span className ="list-header">List of Awesome </span>
+              <label htmlFor="sort-type" className="sort-type-label">Sort by: </label>
+              <select id="sort-type" className="sort-type" value={this.state.fields.indexOf(this.state.sortOn)} onChange={this.onChangeSort}>
+                {sortOptions}
+              </select>
+              <i className="fas fa-sort-down fa-fw arrow"></i>
+            </div>
 
-            <i className="fas fa-sort-down fa-fw arrow"></i>
-            <span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}</span><span>  of </span><span>{this.numberOfItems}</span>
-            <button onClick={this.pageBack} disabled={!this.hasPreviousPage}><i id="prev-arrow" className="fas fa-angle-left arrow page-arrow"></i></button>
-            <button onClick={this.pageForward} disabled={!this.hasNextPage}><i id="next-arrow" className="fas fa-angle-right arrow page-arrow"></i></button>
+            <div className="right-controls">
+              <label htmlFor="per-page" className="per-page-label">Items per page:</label>
+              <select id="per-page" className="per-page" value={this.state.pageSize} onChange={this.onChangeItemsPerPage}>
+              {incrementOptions}
+              </select>
+              <i className="fas fa-sort-down fa-fw arrow"></i>
+              <span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}</span><span>  of </span><span>{this.numberOfItems}</span>
+
+              <button onClick={this.onPageBack} disabled={!this.hasPreviousPage}><i id="prev-arrow" className="fas fa-angle-left arrow page-arrow"></i></button>
+              <button onClick={this.onPageForward} disabled={!this.hasNextPage}><i id="next-arrow" className="fas fa-angle-right arrow page-arrow"></i></button>
+            </div>
+
 
           </div>
         </div>
