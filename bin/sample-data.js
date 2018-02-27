@@ -45,7 +45,7 @@ let userData = [{
 let userData = [
   {
     firstName: 'First Person',
-    lastName: 'Borgetti',
+    lastName: 'Packard',
     country: 'USA',
     address: '2234 3rd Ave Ste 3',
     city: 'Seattle',
@@ -104,7 +104,7 @@ let userData = [
     phone: '310-630-2200'
   },
     {firstName: '7th person',
-    lastName: 'Borgetti',
+    lastName: 'Hawthorne',
     country: 'USA',
     address: '2234 3rd Ave Ste 3',
     city: 'Seattle',
@@ -794,7 +794,7 @@ let userData = [
   },
   {
     firstName: 'Next-to-Last Person',
-    lastName: 'Borgetti',
+    lastName: 'Price',
     country: 'USA',
     address: '2234 3rd Ave Ste 3',
     city: 'Seattle',

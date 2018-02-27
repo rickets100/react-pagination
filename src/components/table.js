@@ -73,14 +73,24 @@ class Table extends Component {
     let fieldName = this.state.fields[sortIndex]
     let clone = this.props.data.slice(0)
     let sortDir = this.state.sortDir
-    console.log("sortDir",sortDir)
+    console.log("sortDir", sortDir)
     clone.sort(function (a, b) {
-      if (a[fieldName] < b[fieldName])
+      let x, y
+
+      if (sortDir == 'asc') {
+        [x, y] = [a, b]
+      } else {
+        [x, y] = [b, a]
+      }
+
+      if (x[fieldName] < y[fieldName]) {
         return -1
-      if (a[fieldName] > b[fieldName])
+      }
+      if (x[fieldName] > y[fieldName]) {
         return 1
+      }
       return 0
-    });
+    })
 
     let currPage = clone.slice(this.state.firstItemNum-1, this.state.lastItemNum)
     return currPage
@@ -241,6 +251,7 @@ Table.defaultProps = {
   data: [],
   fields: null,
   sortOn: null,
+  sortDir: 'asc',
   headers: null,
   pageSize: 10,
   pageIndex: 0
