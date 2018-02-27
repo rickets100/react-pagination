@@ -8,8 +8,8 @@ class Table extends Component {
   constructor(props) {
     super(props)
 
-    this.changeItemsPerPage = this.changeItemsPerPage.bind(this);
-    this.changeSortOn = this.changeSortOn.bind(this);
+    this.onChangeItemsPerPage = this.onChangeItemsPerPage.bind(this)
+    this.onChangeSort = this.onChangeSort.bind(this)
 
     let {data, fields, headers, increments, pageIndex, pageSize, sortOn, sortDir} = this.props;
     let firstItemNum, lastItemNum
@@ -35,8 +35,6 @@ class Table extends Component {
       firstItemNum = (pageSize * pageIndex) + 1
       lastItemNum = (onLastPage) ? (length) : (pageSize + firstItemNum)
     }
-    console.log('originally, firstItemNum is', firstItemNum);
-    console.log('originally, lastItemNum is', lastItemNum);
 
     this.state = {
       fields:           fields,
@@ -50,23 +48,6 @@ class Table extends Component {
       sortDir:          sortDir
     }
   }//constructor
-
-  get startIndex() {
-    console.log("WAS", this.state.firstItemNum)
-    this.state.firstItemNum = this.state.pageIndex*this.state.pageSize
-    console.log("NOW", this.state.firstItemNum)
-    return this.state.pageIndex*this.state.pageSize
-  }
-
-  get endIndex() {
-    let onLastPage = (this.startIndex + this.state.pageSize) > this.numberOfItems
-    if (onLastPage) {
-      this.state.lastItemNum = this.numberOfItems
-    } else {
-      this.state.lastItemNum = this.state.firstItemNum + this.state.pageSize
-    }
-    return (onLastPage) ?  (this.numberOfItems) : (this.startIndex + this.state.pageSize)
-  }
 
   get numberOfPages() {
     let dataSize = this.props.data.length-1
@@ -87,8 +68,21 @@ class Table extends Component {
   }
 
   get currentPage() {
-    let foocurrPage = this.props.data.slice(this.firstItemNum, this.lastItemNum)
-    let currPage = this.props.data.slice(this.startIndex, this.endIndex)
+    //TODO: add type support for type?
+    let sortIndex = this.state.headers.indexOf(this.state.sortOn);
+    let fieldName = this.state.fields[sortIndex]
+    let clone = this.props.data.slice(0)
+    let sortDir = this.state.sortDir
+    console.log("sortDir",sortDir)
+    clone.sort(function (a, b) {
+      if (a[fieldName] < b[fieldName])
+        return -1
+      if (a[fieldName] > b[fieldName])
+        return 1
+      return 0
+    });
+
+    let currPage = clone.slice(this.state.firstItemNum-1, this.state.lastItemNum)
     return currPage
   }
 
@@ -98,61 +92,77 @@ class Table extends Component {
 
   findPageByItemIndex(index, itemsPerPage) {
     let page = Math.ceil(index/itemsPerPage)
-    console.log('in findPageByItemIndex, target page will be', page);
     return page
+  }
+
+  updateState(){
+    let onLastPage = ((this.state.pageIndex * this.state.pageSize) + this.state.pageSize) > this.props.data.length
+    let firstItemIndex = (this.state.pageSize * this.state.pageIndex)
+    let firstItemNum = firstItemIndex + 1
+    let lastItemNum = (onLastPage) ? (this.props.data.length) : (firstItemIndex + this.state.pageSize)
+
+    this.setState(() =>{
+      return {
+        fields:           this.state.fields,
+        firstItemNum:     firstItemNum,
+        lastItemNum:      lastItemNum,
+        headers:          this.state.headers,
+        increments:       this.state.increments,
+        pageIndex:        this.state.pageIndex,
+        pageSize:         this.state.pageSize,
+        sortOn:           this.state.sortOn,
+        sortDir:          this.state.sortDir
+      }
+    })
   }
 
 
   // ========== PAGINATION CONTROLS ==========
-  changeSortOn(event) {
-    console.log('IN CHANGESORTON', event.target.value);
-    this.setState((prevState, props) => {
-    });
+  onChangeSort(event) {
+    let index = event.target.value
+    this.state.sortOn = index
+    this.updateState()
   }//changeSortOn
 
-  changeItemsPerPage(event) {
-    let newValue = parseInt(event.target.value);
-    console.log('-----this.state.firstItemNum', this.state.firstItemNum);
-    let targetPage = this.findPageByItemIndex(this.state.firstItemNum, newValue)
-    console.log('targetpage', targetPage);
-    this.setState((prevState, props) => {
-      let foo = {
-        pageSize: newValue,
-        pageIndex: targetPage,
-        firstItemNum: prevState.firstItemNum,
-        lastItemNum: Math.min(prevState.firstItemNum + newValue, this.numberOfItems)
+  onHeaderClick(index){
+      console.log("onHeaderClick",index)
+      let headerName = this.state.headers[index]
+      let fieldName = this.state.fields[index]
+      if(this.state.sortOn == headerName) {
+        this.state.sortDir = (this.state.sortDir == 'asc')? 'desc' : 'asc'
+        console.log(`already sorted on ${fieldName} flip`)
+      }else{
+        this.state.sortOn = headerName
+        this.state.sortDir = 'asc'
+        console.log(`${fieldName} is new sort`)
       }
-      console.log('foo:',foo)
-      return foo
-    });
+      this.updateState()
+  }
+
+  onChangeItemsPerPage(event) {
+    this.state.pageSize = parseInt(event.target.value);
+    let targetPage = this.findPageByItemIndex(this.state.firstItemNum, this.state.pageSize)
+    this.state.pageIndex = targetPage - 1
+    this.updateState()
   }//changeItemsPerPage
 
   pageBack() {
-    // console.log('IN PAGEBACK');
-    this.setState((prevState, props) => {
-      // if pageIndex is the first page, disable the left arrow
-      return { pageIndex: this.boundPageIndex(prevState.pageIndex - 1) }
-    });
+    this.state.pageIndex = this.boundPageIndex(this.state.pageIndex - 1)
+    this.updateState()
   }//pageBack
 
   pageForward() {
-    // console.log('IN PAGEFORWARD');
-    this.setState((prevState, props) => {
-      // if pageIndex is the last possible page, disable the right arrow
-      return { pageIndex: this.boundPageIndex(prevState.pageIndex + 1)}
-    })
+    // console.log("pageForward 1 ", this.state.pageIndex)
+    this.state.pageIndex = this.boundPageIndex(this.state.pageIndex + 1)
+    this.updateState()
   }//pageForward
 
 
   render() {
-    console.log('\n====== IN RENDER ===========');
-    console.log('pageIndex:',this.state.pageIndex);
-    console.log('======================');
     let { data } = this.props;
     let dataSize = data.length-1
     let page = this.currentPage
     let headerCells = []
-
 
     // ========== FORMULATE LISTBOX OPTIONS ==========
     let incrementOptions = this.state.increments.map((increment, i) => {
@@ -163,41 +173,46 @@ class Table extends Component {
       return <option key={'sortOption'+i} value={header} className="sort-option">{header}</option>
     })
 
-
     // ========== FORMULATE HEADERS ==========
     for (let i=0; i<this.state.headers.length; i++) {
-      let header = this.state.headers[i];
-      headerCells.push(<th className="table-header" key={"header"+header+i}>{header}</th>)
+      let header = this.state.headers[i]
+      headerCells.push(<th
+          className="table-header"
+          key={"header"+header+i}
+          onClick={()=>{this.onHeaderClick(i)}}>{header}</th>)
     }
-    let tableHeaderData = <tr key="table-header">{headerCells}</tr>;
+    let tableHeaderData = <tr key="table-header">{headerCells}</tr>
 
 
     // ========== FORMULATE ROWS ==========
     let tableRowData = page.map((obj, i) => {
-      let cells = [];
-      let sortedData = [];
+      let cells = []
 
       for(let i=0; i<this.state.fields.length; i++) {
-        let field = this.state.fields[i];
+        let field = this.state.fields[i]
         cells.push(<td key={field+i}>{obj[field]}</td>)
       }
 
-      return <tr key={i}>{cells}</tr>;
+      return <tr key={i}>{cells}</tr>
     })//map
 
 
     return (
       <div>
+        pageIndex: {this.state.pageIndex}<br/>
+        pageSize: {this.state.pageSize}<br/>
+        firstItemNum: {this.state.firstItemNum}<br/>
+        lastItemNum: {this.state.lastItemNum}<br/>
         <div className="pagination">
           <div className="container">
             <span className ="list-header">List of Awesome </span>
             <label htmlFor="sort-type" className="sort-type-label">Sort by: </label>
-            <select id="sort-type" className="sort-type" value={this.state.sortOn} onChange={this.changeSortOn}>
+            <select id="sort-type" className="sort-type" value={this.state.sortOn} onChange={this.onChangeSort}>
               {sortOptions}
             </select>
             <i className="fas fa-sort-down fa-fw arrow"></i>
             <label htmlFor="per-page" className="per-page-label">Items per page:</label>
-            <select id="per-page" className="per-page" value={this.state.pageSize} onChange={this.changeItemsPerPage}>
+            <select id="per-page" className="per-page" value={this.state.pageSize} onChange={this.onChangeItemsPerPage}>
             {incrementOptions}
             </select>
 
@@ -220,7 +235,7 @@ class Table extends Component {
     )
   }//render
 
-} //class test
+} //class Table
 
 Table.defaultProps = {
   data: [],
@@ -231,4 +246,4 @@ Table.defaultProps = {
   pageIndex: 0
 };
 
-export default Table;
+export default Table
