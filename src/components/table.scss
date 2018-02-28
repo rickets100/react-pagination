@@ -86,7 +86,7 @@
 
       h2.table-name {
         margin: 5px 0 5px 5px;
-        padding-right: 10px;
+        padding-right: 4px;
         background-color: $white;
         font-size: 1rem;
         font-weight: 400;
@@ -97,7 +97,7 @@
           padding: 0 0 0 2px;
           color: $grey-pipe;
         }
-      }//table-name
+      }
 
       .sort-type {
         margin: 5px 5px 5px 0;
@@ -109,12 +109,8 @@
         &.sort-type-select {
           margin: 5px 5px 5px 0;
         }
-        .pipe-divider {
-          color: $grey-pipe;
-          font-weight: 300;
-        }
       }
-    }//left-controls
+    }
 
     .right-controls {
       margin: 5px 5px 0 0;
@@ -122,22 +118,18 @@
       justify-content: flex-end;
 
       .per-page {
-        // border: 1px solid indigo;
         margin: 5px 5px 5px 5px;
         line-height: 26px;
 
         &.per-page-label {
-          // border: 1px solid maroon;
           margin: 5px 5px 5px 5px;
         }
         &.per-page-select {
-          // border: 1px solid maroon;
           margin: 5px 5px 5px 5px;
         }
       }
 
         .page-range-status {
-          // border: 1px solid indigo;
           margin: 5px 5px 5px 5px;
           line-height: 26px;
 
@@ -153,11 +145,9 @@
             font-size: 1rem;
             color: $blue-dropdown;
             line-height: 26px;
-
           }
-
       }
-    }//right-controls
+    }
   }
   &.bold {
     font-weight: 700;
@@ -168,7 +158,7 @@
   button {
     border: none;
   }
-}//pagination
+}
 
 
 // ===== TABLE BODY =====

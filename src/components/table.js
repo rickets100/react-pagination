@@ -4,7 +4,7 @@ import './app.scss'
 import './table.scss'
 
 /**
- *
+ * a React component that provides a reusable, pageable table
  */
 class Table extends Component {
   constructor(props) {
@@ -62,8 +62,6 @@ class Table extends Component {
       let percentage = (weight/totalWeight)*100
       columnSizes.push(percentage.toString()+"%")
     })
-    console.log('columnSizes:', columnSizes);
-
 
      this.state = {
       columnSizes:    columnSizes,
@@ -78,18 +76,19 @@ class Table extends Component {
       sortOn:         sortOn,
       sortDir:        sortDir
     }
-  }//constructor
+  }
 
 
   /**
-   * get numberOfPages - determines how many pages there are when a given number of items are displayed on each page
+   * get numberOfPages - determines how many pages there are when a given number
+   * of items are displayed on each page
    *
    * @return {Number}  the total number of pages at a given page size
    */
   get numberOfPages() {
     let dataSize = this.props.data.length-1
     let pageSize =  this.state.pageSize
-    return Math.ceil(dataSize/pageSize)
+    return Math.ceil(dataSize / pageSize)
   }
 
   /**
@@ -145,8 +144,8 @@ class Table extends Component {
       return 0
     })
 
-    let currPage = clone.slice(this.state.firstItemNum-1, this.state.lastItemNum)
-    return currPage
+    let currentPage = clone.slice(this.state.firstItemNum-1, this.state.lastItemNum)
+    return currentPage
   }
 
 
@@ -171,14 +170,12 @@ class Table extends Component {
    * @return {Number}               the index of the page that the item would be on
    */
   findPageByItemIndex(index, itemsPerPage) {
-    let page = Math.ceil(index/itemsPerPage)
+    let page = Math.ceil(index / itemsPerPage)
     return page
   }
 
   /**
-   * updateState - description
-   *
-   * @return {type}  description
+   * updateState - updates state when a value changes
    */
   updateState() {
     let onLastPage = ((this.state.pageIndex * this.state.pageSize) + this.state.pageSize) > this.props.data.length
@@ -188,7 +185,7 @@ class Table extends Component {
 
     this.setState(() => {
       return {
-        columnSizes:      columnSizes,
+        columnSizes:      this.state.columnSizes,
         fields:           this.state.fields,
         firstItemNum:     firstItemNum,
         lastItemNum:      lastItemNum,
@@ -204,6 +201,12 @@ class Table extends Component {
 
 
   // ========== PAGINATION CONTROLS ==========
+  /**
+   * onChangeSort - updates the items in view when the user changes the
+   * sort order
+   *
+   * @param  {ReactEvent}  event  event triggered by a change to the "sort by" listbox
+   */
   onChangeSort(event) {
     let index = event.target.value
     let fieldName = this.state.fields[index]
@@ -212,11 +215,18 @@ class Table extends Component {
     this.updateState()
   }
 
+  /**
+   * onHeaderClick - updates state to reflect a change in sort order. If the
+   * currently-chosen header is clicked, it reverses (from ascending to descending
+   * or vice-versa)
+   *
+   * @param  {Number}   index  the index of the column header that has been clicked
+   */
   onHeaderClick(index) {
     let headerName = this.state.headers[index]
     let fieldName = this.state.fields[index]
     if (this.state.sortOn == fieldName) {
-      this.state.sortDir = (this.state.sortDir == 'asc')? 'desc' : 'asc'
+      this.state.sortDir = (this.state.sortDir == 'asc') ? 'desc' : 'asc'
     } else {
       this.state.sortOn = fieldName
       this.state.sortDir = 'asc'
@@ -224,6 +234,12 @@ class Table extends Component {
     this.updateState()
   }
 
+  /**
+   * onChangeItemsPerPage - updates the view when the user changes the
+   * "items per page" option
+   *
+   * @param  {ReactEvent} event event triggered by a change to the "items per page"
+   */
   onChangeItemsPerPage(event) {
     this.state.pageSize = parseInt(event.target.value)
     let targetPage = this.findPageByItemIndex(this.state.firstItemNum, this.state.pageSize)
@@ -231,16 +247,26 @@ class Table extends Component {
     this.updateState()
   }
 
+  /**
+   * onPageBack - updates the view when the user clicks the back arrow
+   * disallows that action if already on the first page
+   *
+   */
   onPageBack() {
     this.state.pageIndex = this.boundPageIndex(this.state.pageIndex - 1)
     this.updateState()
   }
 
+
+  /**
+   * onPageForward - updates the view when the user clicks the forward arrow
+   * disallows that action if already on the last page
+   *
+   */
   onPageForward() {
     this.state.pageIndex = this.boundPageIndex(this.state.pageIndex + 1)
     this.updateState()
   }
-
 
   render() {
     let { data } = this.props;
@@ -262,7 +288,6 @@ class Table extends Component {
       let header = this.state.headers[i]
 
       let tempHeader = "table-header" + " foo"
-      console.log('wtf:', tempHeader);
       headerCells.push(<th
           className={tempHeader}
           key={"header"+header+i}
@@ -283,16 +308,10 @@ class Table extends Component {
       }
 
       return <tr key={i}>{cells}</tr>
-    })//map
-
+    })
 
     return (
       <div>
-        pageIndex: {this.state.pageIndex}<br/>
-        pageSize: {this.state.pageSize}<br/>
-        firstItemNum: {this.state.firstItemNum}<br/>
-        lastItemNum: {this.state.lastItemNum}<br/>
-        this.state.sortDir: {this.state.sortDir}<br/>
         <div className="pagination">
           <div className="container">
             <div className="left-controls">
@@ -316,7 +335,7 @@ class Table extends Component {
                 </div>
               </div>
               <div className="page-range-status">
-                <span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}</span><span>  of </span><span className="page-range">{this.numberOfItems}</span>
+                <span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}</span><span> of </span><span className="page-range">{this.numberOfItems}</span>
               </div>
               <div className="page-navigation">
                 <button onClick={this.onPageBack} disabled={!this.hasPreviousPage} className="page-arrow"><i id="prev-arrow" className="fas fa-angle-left"></i></button>
@@ -336,9 +355,8 @@ class Table extends Component {
         </table>
       </div>
     )
-  }//render
-
-} //class Table
+  }
+}
 
 Table.defaultProps = {
   data: [],
