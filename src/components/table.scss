@@ -1,6 +1,41 @@
 @import './_colors.scss';
 @import './_fonts.scss';
 
+.select-wrapper {
+  border-radius: 3px;
+  position: relative;
+  display: inline-block;
+  min-width: 75px;
+
+  select {
+    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    top:0;
+    &::-ms-expand {
+      display: none;
+    }
+    border: none;
+  }
+  &:after {
+    font-family: "Font Awesome\ 5 Free";
+    font-weight: 900;
+    color: #1DAFE9;
+    pointer-events: none;
+    content: "\f0dd";
+    position: absolute;
+    top:0;
+    right:0;
+    display: inline-block;
+    width: 15px;
+    height: 20px;
+    float: right;
+  }
+}
+
+
 // ===== TABLE NAVIGATION =====
 .pagination {
   display: flex;
@@ -112,16 +147,13 @@
           }
 
       }
-    }//.right-controls
+    }//right-controls
   }
   &.bold {
     font-weight: 700;
   }
   &.standard {
     font-weight: 400;
-  }
-  .arrow {
-    color: $blue-dropdown;
   }
   button {
     border: none;

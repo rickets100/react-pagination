@@ -270,7 +270,7 @@ class Table extends Component {
                 <select id="sort-type-select" className="sort-type-select" value={this.state.fields.indexOf(this.state.sortOn)} onChange={this.onChangeSort}>
                   {sortOptions}
                 </select>
-                <i className="fas fa-sort-down fa-fw arrow"></i>
+                <i className="fas fa-sort-down fa-fw"></i>
               </div>
             </div>
 
@@ -278,10 +278,11 @@ class Table extends Component {
 
               <div className="per-page">
                 <label htmlFor="per-page-select" className="per-page-label">Items per page:</label>
-                <select id="per-page-select" className="per-page-select" value={this.state.pageSize} onChange={this.onChangeItemsPerPage}>
-                  {incrementOptions}
-                </select>
-                <i className="fas fa-sort-down fa-fw arrow"></i>
+                <div className="select-wrapper">
+                  <select id="per-page-select" className="per-page-select" value={this.state.pageSize} onChange={this.onChangeItemsPerPage}>
+                    {incrementOptions}
+                  </select>
+                </div>
               </div>
 
               <div className="page-range-status">

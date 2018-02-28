@@ -19,11 +19,11 @@
 
     <h1 class="page-title">Source: table.js</h1>
 
-    
 
 
 
-    
+
+
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React, {Component} from 'react'
@@ -277,13 +277,13 @@ class Table extends Component {
             &lt;select id="sort-type" className="sort-type" value={this.state.fields.indexOf(this.state.sortOn)} onChange={this.onChangeSort}>
               {sortOptions}
             &lt;/select>
-            &lt;i className="fas fa-sort-down fa-fw arrow">&lt;/i>
+            &lt;i className="fas fa-sort-down fa-fw">&lt;/i>
             &lt;label htmlFor="per-page" className="per-page-label">Items per page:&lt;/label>
             &lt;select id="per-page" className="per-page" value={this.state.pageSize} onChange={this.onChangeItemsPerPage}>
             {incrementOptions}
             &lt;/select>
 
-            &lt;i className="fas fa-sort-down fa-fw arrow">&lt;/i>
+            &lt;i className="fas fa-sort-down fa-fw">&lt;/i>
             &lt;span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}&lt;/span>&lt;span>  of &lt;/span>&lt;span>{this.numberOfItems}&lt;/span>
             &lt;button onClick={this.pageBack} disabled={!this.hasPreviousPage}>&lt;i id="prev-arrow" className="fas fa-angle-left arrow page-arrow">&lt;/i>&lt;/button>
             &lt;button onClick={this.pageForward} disabled={!this.hasNextPage}>&lt;i id="next-arrow" className="fas fa-angle-right arrow page-arrow">&lt;/i>&lt;/button>
