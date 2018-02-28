@@ -10,7 +10,7 @@
   }
 
   .per-page-select {
-    min-width: 40px;
+    min-width: 44px;
   }
 
   select {
@@ -67,10 +67,10 @@
     font-size: .75rem;
     font-weight: 600;
   }
-  
+
   .sort-option, .per-page-option {
     color: $blue-dropdown;
-    font-weight: 400;
+    font-weight: 600;
   }
 
   .container {
@@ -95,6 +95,8 @@
         &::after {
           content: "|";
           padding: 0 0 0 2px;
+          font-size: 1rem;
+          font-weight: 400;
           color: $grey-pipe;
         }
       }
