@@ -276,7 +276,10 @@ class Table extends Component {
 
       for(let i=0; i<this.state.fields.length; i++) {
         let field = this.state.fields[i]
-        cells.push(<td key={field+i}>{obj[field]}</td>)
+        let cellWidth = {
+          width: this.state.columnSizes[i]
+        }
+        cells.push(<td key={field+i} style={cellWidth}>{obj[field]}</td>)
       }
 
       return <tr key={i}>{cells}</tr>
