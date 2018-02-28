@@ -5,7 +5,7 @@
   border-radius: 3px;
   position: relative;
   display: inline-block;
-  min-width: 75px;
+  min-width: 100px;
 
   select {
     width: 100%;
@@ -50,6 +50,7 @@
     color: $purple-labels;
     font-size: .75rem;
     font-weight: 400;
+    padding-right: 4px;
   }
   .sort-type-select, .per-page-select {
     background-color: $white;

@@ -266,11 +266,12 @@ class Table extends Component {
 
               <h2 className ="table-name">List of Awesome</h2>
               <div className="sort-type">
-                <label htmlFor="sort-type-select" className="sort-type-label">Sort by: </label>
-                <select id="sort-type-select" className="sort-type-select" value={this.state.fields.indexOf(this.state.sortOn)} onChange={this.onChangeSort}>
-                  {sortOptions}
-                </select>
-                <i className="fas fa-sort-down fa-fw"></i>
+                  <label htmlFor="sort-type-select" className="sort-type-label">Sort by: </label>
+                  <div className="select-wrapper">
+                    <select id="sort-type-select" className="sort-type-select" value={this.state.fields.indexOf(this.state.sortOn)} onChange={this.onChangeSort}>
+                      {sortOptions}
+                    </select>
+                </div>
               </div>
             </div>
 
@@ -289,8 +290,8 @@ class Table extends Component {
                 <span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}</span><span>  of </span><span className="page-range">{this.numberOfItems}</span>
               </div>
               <div className="page-navigation">
-                <button onClick={this.onPageBack} disabled={!this.hasPreviousPage}><i id="prev-arrow" className="fas fa-angle-left arrow page-arrow"></i></button>
-                <button onClick={this.onPageForward} disabled={!this.hasNextPage}><i id="next-arrow" className="fas fa-angle-right arrow page-arrow"></i></button>
+                <button onClick={this.onPageBack} disabled={!this.hasPreviousPage}><i id="prev-arrow" className="fas fa-angle-left page-arrow"></i></button>
+                <button onClick={this.onPageForward} disabled={!this.hasNextPage}><i id="next-arrow" className="fas fa-angle-right page-arrow"></i></button>
               </div>
 
             </div>
