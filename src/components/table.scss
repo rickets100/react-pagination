@@ -2,10 +2,16 @@
 @import './_fonts.scss';
 
 .select-wrapper {
-  border-radius: 3px;
   position: relative;
   display: inline-block;
-  min-width: 100px;
+
+  .sort-type-select {
+    min-width: 100px;
+  }
+
+  .per-page-select {
+    min-width: 40px;
+  }
 
   select {
     width: 100%;
@@ -20,18 +26,17 @@
     border: none;
   }
   &:after {
-    font-family: "Font Awesome\ 5 Free";
-    font-weight: 900;
-    color: #1DAFE9;
-    pointer-events: none;
-    content: "\f0dd";
+    display: inline-block;
+    float: right;
     position: absolute;
     top:0;
     right:0;
-    display: inline-block;
     width: 15px;
-    height: 20px;
-    float: right;
+    font-family: "Font Awesome\ 5 Free";
+    font-weight: 900;
+    color: #1DAFE9;
+    content: "\f0dd";
+    pointer-events: none;
   }
 }
 
@@ -59,7 +64,7 @@
     font-weight: 600;
   }
   .sort-option, .per-page-option {
-    border: 1px solid indigo;
+    // border: 1px solid indigo;
     margin: 5px 5px 5px 5px;
     color: $blue-dropdown;
     font-weight: 400;
@@ -77,24 +82,31 @@
     width: 100%;
 
     .left-controls {
-      border: 1px solid dodgerblue;
+      // border: 1px solid dodgerblue;
       margin: 5px 0 5px 5px;
       display: flex;
       justify-content: flex-start;
 
       h2.table-name {
-        border: 1px solid indigo;
+        // border: 1px solid indigo;
         margin: 5px 5px 5px 5px;
         padding-right: 10px;
         background-color: $white;
         font-size: 1rem;
         font-weight: 400;
         color: $purple-labels;
+
+        &::after {
+          content: "|";
+          padding: 0 2px 0 2px;
+          color: $grey-pipe;
+        }
       }//table-name
 
       .sort-type {
-        border: 1px solid indigo;
+        // border: 1px solid indigo;
         margin: 5px 5px 5px 5px;
+        line-height: 26px;
 
         &.sort-type-label {
           border: 1px solid maroon;
@@ -143,8 +155,10 @@
         .page-navigation {
           border: 1px solid maroon;
           margin: 5px 5px 5px 5px;
-          .prev-arrow, .next-arrow {
+
+          button {
             font-size: 1rem;
+            color: $blue-dropdown;
           }
 
       }
