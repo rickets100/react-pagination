@@ -3,8 +3,8 @@
 [https://www.codementor.io/valentinrad/roll-your-own-tiny-react-environment-using-webpack-babel-and-sass-ei70wyhjl]
 
 ##fonts and icons
-https://fontawesome.com/
-https://fonts.google.com/
+[https://fontawesome.com/]
+[https://fonts.google.com/]
 
 ##dummy data
 https://www.json-generator.com/
