@@ -62,9 +62,9 @@ class Table extends Component {
       }
     }
 
-    headerWeights.forEach((weight) =>{
-      let percentage = (weight/totalWeight)*100
-      columnSizes.push(percentage.toString()+"%")
+    headerWeights.forEach((weight) => {
+      let percentage = (weight/totalWeight) * 100
+      columnSizes.push(percentage.toString() + "%")
     })
 
      this.state = {
@@ -299,7 +299,7 @@ class Table extends Component {
           style={cellWidth}
           onClick={()=>{this.onHeaderClick(i)}}>{header}</th>)
     }
-    let tableHeaderData = <tr key="table-header">{headerCells}</tr>
+    let tableHeaderData = <tr key="table-header" role="button">{headerCells}</tr>
 
     // ========== FORMULATE ROWS ==========
     let tableRowData = page.map((obj, i) => {

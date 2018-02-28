@@ -7,10 +7,16 @@
 
   .sort-type-select {
     min-width: 100px;
+    &:focus {
+      outline-color: $white;
+    }
   }
 
   .per-page-select {
     min-width: 44px;
+    &:focus {
+      outline-color: $white;
+    }
   }
 
   select {
@@ -21,6 +27,7 @@
     -moz-appearance: none;
     text-indent: 1px;
     text-overflow: '';
+    text-align: right;
 
     &::-ms-expand {
       display: none;
@@ -47,7 +54,7 @@
 .pagination {
   display: flex;
   margin: 0;
-  padding: 0;
+  padding-bottom: 5px;
   align-items: center;
   font-family: $font;
   font-size: .875rem;
@@ -78,11 +85,13 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     width: 100%;
+    padding-bottom: 4px;
 
     .left-controls {
       display: flex;
       justify-content: flex-start;
       margin: 5px 0 0 5px;
+      padding-bottom: 4px;
 
       h2.table-name {
         margin: 5px 0 5px 5px;
@@ -121,6 +130,7 @@
 
       .per-page {
         margin: 5px 5px 5px 5px;
+        height: 2rem;
         line-height: 26px;
 
         &.per-page-label {
@@ -142,6 +152,9 @@
       }
 
       .page-navigation {
+        display: flex;
+        justify-content: space-between;
+        width: 3rem;
         margin: 5px 0 5px 5px;
         line-height: 26px;
 
@@ -149,6 +162,17 @@
           font-size: 1rem;
           color: $blue-dropdown;
           line-height: 26px;
+          &:focus {
+            outline-color: $white;
+          }
+          &:hover {
+            background-color: $blue-dropdown;
+            opacity: .8;
+            color: $white;
+            border: solid 1px $white;
+            border-radius: 3px;
+            transition: 300ms;
+          }
         }
       }
     }
