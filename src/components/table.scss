@@ -45,7 +45,7 @@
 .pagination {
   display: flex;
   margin: 0;
-  padding: 0 0 10px 0;
+  padding: 0;
   align-items: center;
   font-family: $font;
   font-size: .875rem;
@@ -62,10 +62,9 @@
     color: $blue-dropdown;
     font-size: .75rem;
     font-weight: 600;
+    padding-left: 2px;
   }
   .sort-option, .per-page-option {
-    // border: 1px solid indigo;
-    margin: 5px 5px 5px 5px;
     color: $blue-dropdown;
     font-weight: 400;
 
@@ -75,21 +74,18 @@
   }
 
   .container {
-    border: 1px solid orange;
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
     width: 100%;
 
     .left-controls {
-      // border: 1px solid dodgerblue;
-      margin: 5px 0 5px 5px;
+      margin: 5px 0 0 5px;
       display: flex;
       justify-content: flex-start;
 
       h2.table-name {
-        // border: 1px solid indigo;
-        margin: 5px 5px 5px 5px;
+        margin: 5px 0 5px 5px;
         padding-right: 10px;
         background-color: $white;
         font-size: 1rem;
@@ -98,67 +94,66 @@
 
         &::after {
           content: "|";
-          padding: 0 2px 0 2px;
+          padding: 0 0 0 2px;
           color: $grey-pipe;
         }
       }//table-name
 
       .sort-type {
-        // border: 1px solid indigo;
-        margin: 5px 5px 5px 5px;
+        margin: 5px 5px 5px 0;
         line-height: 26px;
 
         &.sort-type-label {
-          border: 1px solid maroon;
-          margin: 5px 5px 5px 5px;
+          margin: 5px 5px 5px 0;
         }
         &.sort-type-select {
-          border: 1px solid maroon;
-          margin: 5px 5px 5px 5px;
+          margin: 5px 5px 5px 0;
         }
         .pipe-divider {
           color: $grey-pipe;
           font-weight: 300;
         }
-
       }
+    }//left-controls
 
-    }
     .right-controls {
-      border: 1px solid dodgerblue;
-      margin: 5px 5px 5px 0;
+      margin: 5px 5px 0 0;
       display: flex;
       justify-content: flex-end;
 
       .per-page {
-        border: 1px solid indigo;
+        // border: 1px solid indigo;
         margin: 5px 5px 5px 5px;
+        line-height: 26px;
 
         &.per-page-label {
-          border: 1px solid maroon;
+          // border: 1px solid maroon;
           margin: 5px 5px 5px 5px;
         }
         &.per-page-select {
-          border: 1px solid maroon;
+          // border: 1px solid maroon;
           margin: 5px 5px 5px 5px;
         }
       }
 
         .page-range-status {
-          border: 1px solid indigo;
+          // border: 1px solid indigo;
           margin: 5px 5px 5px 5px;
+          line-height: 26px;
 
           .page-range {
           }
 
         }
         .page-navigation {
-          border: 1px solid maroon;
-          margin: 5px 5px 5px 5px;
+          margin: 5px 0 5px 5px;
+          line-height: 26px;
 
           button {
             font-size: 1rem;
             color: $blue-dropdown;
+            line-height: 26px;
+
           }
 
       }
