@@ -1,3 +1,7 @@
+/* ===============
+KAY KREWSON
+kay.k@mykolab.com
+=============== */
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import './app.scss'
