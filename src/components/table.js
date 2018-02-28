@@ -285,8 +285,9 @@ class Table extends Component {
               </div>
 
               <div className="page-range-status">
-                <span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}</span><span>  of </span><span>{this.numberOfItems}</span>
-
+                <span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}</span><span>  of </span><span className="page-range">{this.numberOfItems}</span>
+              </div>
+              <div className="page-navigation">
                 <button onClick={this.onPageBack} disabled={!this.hasPreviousPage}><i id="prev-arrow" className="fas fa-angle-left arrow page-arrow"></i></button>
                 <button onClick={this.onPageForward} disabled={!this.hasNextPage}><i id="next-arrow" className="fas fa-angle-right arrow page-arrow"></i></button>
               </div>

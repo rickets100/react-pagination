@@ -96,9 +96,21 @@
         }
       }
 
-      .page-range-status {
-        border: 1px solid indigo;
-        margin: 5px 5px 5px 5px;
+        .page-range-status {
+          border: 1px solid indigo;
+          margin: 5px 5px 5px 5px;
+
+          .page-range {
+          }
+
+        }
+        .page-navigation {
+          border: 1px solid maroon;
+          margin: 5px 5px 5px 5px;
+          .prev-arrow, .next-arrow {
+            font-size: 1rem;
+          }
+
       }
     }//.right-controls
   }
@@ -110,9 +122,6 @@
   }
   .arrow {
     color: $blue-dropdown;
-  }
-  .page-arrow {
-    font-size: 1rem;
   }
   button {
     border: none;
