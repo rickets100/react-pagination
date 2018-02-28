@@ -15,7 +15,7 @@ class App extends Component {
             <Table
               data = {data}
               headers = {['First Name', 'Last Name', 'Country', 'Address', 'City', 'State', 'Zip', 'Phone']}
-              headerWeights = {[1,1,1,5,1,1,1,1]}
+              headerWeights = {[1.5,1,1,2.5,1,1.5,1,2]}
               increments = {[5, 10, 25, 50, 75, 100]}
               pageIndex = {0}
               pageSize = {10}

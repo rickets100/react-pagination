@@ -286,11 +286,13 @@ class Table extends Component {
     // ========== FORMULATE HEADERS ==========
     for (let i=0; i<this.state.headers.length; i++) {
       let header = this.state.headers[i]
-
-      let tempHeader = "table-header" + " foo"
+      let cellWidth = {
+        width: this.state.columnSizes[i]
+      }
       headerCells.push(<th
-          className={tempHeader}
+          className="table-header"
           key={"header"+header+i}
+          style={cellWidth}
           onClick={()=>{this.onHeaderClick(i)}}>{header}</th>)
     }
     let tableHeaderData = <tr key="table-header">{headerCells}</tr>

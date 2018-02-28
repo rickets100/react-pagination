@@ -67,13 +67,10 @@
     font-size: .75rem;
     font-weight: 600;
   }
+  
   .sort-option, .per-page-option {
     color: $blue-dropdown;
     font-weight: 400;
-
-    &.bold {
-      font-weight: 600;
-    }
   }
 
   .container {
@@ -135,10 +132,11 @@
       .page-range-status {
         margin: 5px 5px 5px 5px;
         line-height: 26px;
+        font-weight: 400;
 
         .page-range {
+          font-weight: 700;
         }
-
       }
 
       .page-navigation {
@@ -152,13 +150,6 @@
         }
       }
     }
-  }
-
-  &.bold {
-    font-weight: 700;
-  }
-  &.standard {
-    font-weight: 400;
   }
 
   button {
