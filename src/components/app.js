@@ -15,9 +15,10 @@ class App extends Component {
             <Table
               data = {data}
               headers = {['First Name', 'Last Name', 'Country', 'Address', 'City', 'State', 'Zip', 'Phone']}
-              increments={[5, 10, 25, 50, 75, 100]}
-              pageIndex={0}
-              pageSize={10}
+              headerWeights = {[1,1,1,5,1,1,1,1]}
+              increments = {[5, 10, 25, 50, 75, 100]}
+              pageIndex = {0}
+              pageSize = {10}
             />
           </div>;
   }//render

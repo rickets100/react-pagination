@@ -15,9 +15,12 @@ class Table extends Component {
     this.onPageBack = this.onPageBack.bind(this)
     this.onPageForward = this.onPageForward.bind(this)
 
-    let {data, fields, headers, increments, pageIndex, pageSize, sortOn, sortDir} = this.props
+    let {data, fields, headers, headerWeights, increments, pageIndex, pageSize, sortOn, sortDir} = this.props
     let firstItemNum, lastItemNum
     let length = data.length
+    let headerWidths
+    let totalWeight = 0
+    let columnSizes = []
 
     if (!fields && (length > 0)) {
       fields = Object.keys(data[0])
@@ -40,16 +43,40 @@ class Table extends Component {
       lastItemNum = (onLastPage) ? (length) : (pageSize + firstItemNum)
     }
 
-    this.state = {
+    // ===== CALCULATE COLUMN WIDTHS =====
+    if (headerWeights) {
+      let items = headerWeights.length
+
+      for (let i in headerWeights) {
+        totalWeight = totalWeight + headerWeights[i]
+      }
+    } else {
+      totalWeight=headers.length
+      headerWeights = []
+      for (let i=0; i<headers.length; i++) {
+        headerWeights.push(1)
+      }
+    }
+
+    headerWeights.forEach((weight) =>{
+      let percentage = (weight/totalWeight)*100
+      columnSizes.push(percentage.toString()+"%")
+    })
+    console.log('columnSizes:', columnSizes);
+
+
+     this.state = {
+      columnSizes:    columnSizes,
       fields:         fields,
       firstItemNum:   firstItemNum,
       lastItemNum:    lastItemNum,
       headers:        headers,
+      headerWeights:  headerWeights,
       increments:     increments,
       pageIndex:      pageIndex,
       pageSize:       pageSize,
       sortOn:         sortOn,
-      sortDir:         sortDir
+      sortDir:        sortDir
     }
   }//constructor
 
@@ -161,6 +188,7 @@ class Table extends Component {
 
     this.setState(() => {
       return {
+        columnSizes:      columnSizes,
         fields:           this.state.fields,
         firstItemNum:     firstItemNum,
         lastItemNum:      lastItemNum,
@@ -232,8 +260,11 @@ class Table extends Component {
     // ========== FORMULATE HEADERS ==========
     for (let i=0; i<this.state.headers.length; i++) {
       let header = this.state.headers[i]
+
+      let tempHeader = "table-header" + " foo"
+      console.log('wtf:', tempHeader);
       headerCells.push(<th
-          className="table-header"
+          className={tempHeader}
           key={"header"+header+i}
           onClick={()=>{this.onHeaderClick(i)}}>{header}</th>)
     }
@@ -261,9 +292,7 @@ class Table extends Component {
         this.state.sortDir: {this.state.sortDir}<br/>
         <div className="pagination">
           <div className="container">
-
             <div className="left-controls">
-
               <h2 className ="table-name">List of Awesome</h2>
               <div className="sort-type">
                   <label htmlFor="sort-type-select" className="sort-type-label">Sort by: </label>
@@ -274,9 +303,7 @@ class Table extends Component {
                 </div>
               </div>
             </div>
-
             <div className="right-controls">
-
               <div className="per-page">
                 <label htmlFor="per-page-select" className="per-page-label">Items per page:</label>
                 <div className="select-wrapper">
@@ -285,7 +312,6 @@ class Table extends Component {
                   </select>
                 </div>
               </div>
-
               <div className="page-range-status">
                 <span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}</span><span>  of </span><span className="page-range">{this.numberOfItems}</span>
               </div>
@@ -293,12 +319,10 @@ class Table extends Component {
                 <button onClick={this.onPageBack} disabled={!this.hasPreviousPage} className="page-arrow"><i id="prev-arrow" className="fas fa-angle-left"></i></button>
                 <button onClick={this.onPageForward} disabled={!this.hasNextPage} className="page-arrow"><i id="next-arrow" className="fas fa-angle-right"></i></button>
               </div>
-
             </div>
-
-
           </div>
         </div>
+
         <table>
           <thead>
             {tableHeaderData}
