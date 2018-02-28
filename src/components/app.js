@@ -21,8 +21,8 @@ class App extends Component {
               pageSize = {10}
             />
           </div>;
-  }//render
-}//App
+  }
+}
 
 ReactDOM.render(
   <App />,

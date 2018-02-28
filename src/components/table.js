@@ -269,7 +269,7 @@ class Table extends Component {
   }
 
   render() {
-    let { data } = this.props;
+    let { data } = this.props
     let dataSize = data.length-1
     let page = this.currentPage
     let headerCells = []
@@ -366,6 +366,6 @@ Table.defaultProps = {
   headers: null,
   pageSize: 10,
   pageIndex: 0
-};
+}
 
 export default Table

@@ -15,20 +15,22 @@
 
   select {
     width: 100%;
+    top:0;
+    border: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     text-indent: 1px;
     text-overflow: '';
-    top:0;
+
     &::-ms-expand {
       display: none;
     }
-    border: none;
   }
+
   &:after {
     display: inline-block;
-    float: right;
     position: absolute;
+    float: right;
     top:0;
     right:0;
     width: 15px;
@@ -52,17 +54,18 @@
   color: $purple-labels;
 
   .sort-type-label, .per-page-label {
+    padding-right: 4px;
     color: $purple-labels;
     font-size: .75rem;
     font-weight: 400;
-    padding-right: 4px;
   }
+
   .sort-type-select, .per-page-select {
+    padding-left: 2px;
     background-color: $white;
     color: $blue-dropdown;
     font-size: .75rem;
     font-weight: 600;
-    padding-left: 2px;
   }
   .sort-option, .per-page-option {
     color: $blue-dropdown;
@@ -80,9 +83,9 @@
     width: 100%;
 
     .left-controls {
-      margin: 5px 0 0 5px;
       display: flex;
       justify-content: flex-start;
+      margin: 5px 0 0 5px;
 
       h2.table-name {
         margin: 5px 0 5px 5px;
@@ -113,9 +116,9 @@
     }
 
     .right-controls {
-      margin: 5px 5px 0 0;
       display: flex;
       justify-content: flex-end;
+      margin: 5px 5px 0 0;
 
       .per-page {
         margin: 5px 5px 5px 5px;
@@ -129,32 +132,35 @@
         }
       }
 
-        .page-range-status {
-          margin: 5px 5px 5px 5px;
-          line-height: 26px;
+      .page-range-status {
+        margin: 5px 5px 5px 5px;
+        line-height: 26px;
 
-          .page-range {
-          }
-
+        .page-range {
         }
-        .page-navigation {
-          margin: 5px 0 5px 5px;
-          line-height: 26px;
 
-          button {
-            font-size: 1rem;
-            color: $blue-dropdown;
-            line-height: 26px;
-          }
+      }
+
+      .page-navigation {
+        margin: 5px 0 5px 5px;
+        line-height: 26px;
+
+        button {
+          font-size: 1rem;
+          color: $blue-dropdown;
+          line-height: 26px;
+        }
       }
     }
   }
+
   &.bold {
     font-weight: 700;
   }
   &.standard {
     font-weight: 400;
   }
+
   button {
     border: none;
   }
@@ -174,6 +180,7 @@ table {
   font-size: .75rem;
   font-weight: 700;
   color: $purple-navbar;
+
   &:first-of-type {
     border-radius: 3px 0 0 0;
   }
@@ -190,11 +197,11 @@ tr {
   color: $grey-items;
 
   &:nth-child(even) {
-    background: $grey-row-lt
+    background: $grey-row-lt;
   }
 
   tr:nth-child(odd) {
-    background: $grey-row-dk
+    background: $grey-row-dk;
   }
 
   th, td {
