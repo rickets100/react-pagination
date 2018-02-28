@@ -19,22 +19,20 @@
 
     <h1 class="page-title">Source: table.js</h1>
 
+    
 
 
 
-
-
+    
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import './app.scss'
 import './table.scss'
 
-
 /**
- *
+ * a React component that provides a reusable, pageable table
  */
 class Table extends Component {
   constructor(props) {
@@ -42,14 +40,17 @@ class Table extends Component {
 
     this.onChangeItemsPerPage = this.onChangeItemsPerPage.bind(this)
     this.onChangeSort = this.onChangeSort.bind(this)
-    this.pageBack = this.pageBack.bind(this)
-    this.pageForward = this.pageForward.bind(this)
+    this.onPageBack = this.onPageBack.bind(this)
+    this.onPageForward = this.onPageForward.bind(this)
 
-    let {data, fields, headers, increments, pageIndex, pageSize, sortOn, sortDir} = this.props;
+    let {data, fields, headers, headerWeights, increments, pageIndex, pageSize, sortOn, sortDir} = this.props
     let firstItemNum, lastItemNum
     let length = data.length
+    let headerWidths
+    let totalWeight = 0
+    let columnSizes = []
 
-    if (!fields &amp;&amp; (length > 0)){
+    if (!fields &amp;&amp; (length > 0)) {
       fields = Object.keys(data[0])
     }
 
@@ -62,7 +63,7 @@ class Table extends Component {
     }
 
     if (!pageIndex) {
-      firstItemNum = 1;
+      firstItemNum = 1
       lastItemNum = Math.min(pageSize, length)
     } else {
       let onLastPage = ((pageIndex * pageSize) + pageSize) > length
@@ -70,55 +71,98 @@ class Table extends Component {
       lastItemNum = (onLastPage) ? (length) : (pageSize + firstItemNum)
     }
 
-    this.state = {
-      fields:           fields,
+    // ===== CALCULATE COLUMN WIDTHS =====
+    if (headerWeights) {
+      let items = headerWeights.length
+
+      for (let i in headerWeights) {
+        totalWeight = totalWeight + headerWeights[i]
+      }
+    } else {
+      totalWeight=headers.length
+      headerWeights = []
+      for (let i=0; i&lt;headers.length; i++) {
+        headerWeights.push(1)
+      }
+    }
+
+    headerWeights.forEach((weight) =>{
+      let percentage = (weight/totalWeight)*100
+      columnSizes.push(percentage.toString()+"%")
+    })
+
+     this.state = {
+      columnSizes:    columnSizes,
+      fields:         fields,
       firstItemNum:   firstItemNum,
       lastItemNum:    lastItemNum,
-      headers:          headers,
-      increments:       increments,
-      pageIndex:        pageIndex,
-      pageSize:         pageSize,
-      sortOn:           sortOn,
-      sortDir:          sortDir
+      headers:        headers,
+      headerWeights:  headerWeights,
+      increments:     increments,
+      pageIndex:      pageIndex,
+      pageSize:       pageSize,
+      sortOn:         sortOn,
+      sortDir:        sortDir
     }
-  }//constructor
+  }
 
 
   /**
-   * get numberOfPages - description
+   * get numberOfPages - determines how many pages there are when a given number
+   * of items are displayed on each page
    *
-   * @return {Number}  description
+   * @return {Number}  the total number of pages at a given page size
    */
   get numberOfPages() {
     let dataSize = this.props.data.length-1
     let pageSize =  this.state.pageSize
-    return Math.ceil(dataSize/pageSize)
+    return Math.ceil(dataSize / pageSize)
   }
 
+  /**
+   * get numberOfItems - Gets the number of items in a dataset
+   *
+   * @return {Number}  The number of items
+   */
   get numberOfItems() {
     return this.props.data.length
   }
 
+  /**
+   * get hasNextPage - checks to see whether there are more pages after the one
+   * currently in view. For use in disabling/enabling the forward chevron.
+   *
+   * @return {Boolean}  Is the total number of pages greater than the index of the
+   * current page?
+   */
   get hasNextPage() {
-    return (this.numberOfPages > this.state.pageIndex+1)
+    return (this.numberOfPages > this.state.pageIndex + 1)
   }
 
+  /**
+   * get hasPreviousPage - checks to see whether there are more pages before the one currently in view. For use in disabling/enabling the backward chevron.
+   *
+   * @return {Boolean}  Are you currently viewing a page other than the very first one?
+   */
   get hasPreviousPage() {
     return (this.state.pageIndex > 0)
   }
 
+  /**
+   * get currentPage -forms a selection of the dataset, based on the current page
+   * size and sort criteria
+   *
+   * @return {Array}  the items from the dataset that are currently in view
+   */
   get currentPage() {
-    //TODO: add type support for type?
-    console.log("this.state.sortOn",this.state.sortOn)
-    let fieldName = this.state.sortOn
     let clone = this.props.data.slice(0)
+    let fieldName = this.state.sortOn
     let sortDir = this.state.sortDir
 
     clone.sort(function (a, b) {
-      // console.log('fieldName:', fieldName)
       let x, y
+
       (sortDir == 'asc') ? [x, y] = [a, b] : [x, y] = [b, a]
-      // console.log('x:', x, 'y', y);
       if (x[fieldName] &lt; y[fieldName]) {
         return -1
       }
@@ -127,46 +171,49 @@ class Table extends Component {
       }
       return 0
     })
-    console.log("headers", this.state.headers)
-    console.log("------sortOn",this.state.sortOn)
-    console.log("sortDir", sortDir)
 
-    let currPage = clone.slice(this.state.firstItemNum-1, this.state.lastItemNum)
-    return currPage
+    let currentPage = clone.slice(this.state.firstItemNum-1, this.state.lastItemNum)
+    return currentPage
   }
 
 
   /**
-   * boundPageIndex - description
+   * boundPageIndex - this limits the page index to no more than the total number of
+   * pages, and no less than the first page
    *
-   * @param  {type} val description
-   * @return {Number}     description
+   * @param  {Number}   val a page index
+   * @return {Number}       a page index
    */
   boundPageIndex(val) {
     return Math.min(this.numberOfPages, Math.max(0, val))
   }
 
   /**
-   * findPageByItemIndex - returns the page index that contains a given item index,
-   * based on the given items per page
+   * findPageByItemIndex - Given the index of an item from the dataset, this returns
+   * the index of the page that would contain it were the number of items per-page
+   * to be changed
    *
    * @param  {Number} index         the index of the item
    * @param  {Number} itemsPerPage  the number of items per page
-   * @return {Number}               the index of the page that item would exist on
+   * @return {Number}               the index of the page that the item would be on
    */
   findPageByItemIndex(index, itemsPerPage) {
-    let page = Math.ceil(index/itemsPerPage)
+    let page = Math.ceil(index / itemsPerPage)
     return page
   }
 
-  updateState(){
+  /**
+   * updateState - updates state when a value changes
+   */
+  updateState() {
     let onLastPage = ((this.state.pageIndex * this.state.pageSize) + this.state.pageSize) > this.props.data.length
     let firstItemIndex = (this.state.pageSize * this.state.pageIndex)
     let firstItemNum = firstItemIndex + 1
     let lastItemNum = (onLastPage) ? (this.props.data.length) : (firstItemIndex + this.state.pageSize)
 
-    this.setState(() =>{
+    this.setState(() => {
       return {
+        columnSizes:      this.state.columnSizes,
         fields:           this.state.fields,
         firstItemNum:     firstItemNum,
         lastItemNum:      lastItemNum,
@@ -182,50 +229,75 @@ class Table extends Component {
 
 
   // ========== PAGINATION CONTROLS ==========
+  /**
+   * onChangeSort - updates the items in view when the user changes the
+   * sort order
+   *
+   * @param  {ReactEvent}  event  event triggered by a change to the "sort by" listbox
+   */
   onChangeSort(event) {
     let index = event.target.value
     let fieldName = this.state.fields[index]
     this.state.sortOn = fieldName
     this.state.sortDir = 'asc'
     this.updateState()
-  }//changeSortOn
-
-  onHeaderClick(index){
-      console.log("onHeaderClick",index)
-      let headerName = this.state.headers[index]
-      let fieldName = this.state.fields[index]
-      if(this.state.sortOn == fieldName) {
-        this.state.sortDir = (this.state.sortDir == 'asc')? 'desc' : 'asc'
-        console.log(`already sorted on ${fieldName} flip`)
-      }else{
-        this.state.sortOn = fieldName
-        this.state.sortDir = 'asc'
-        console.log(`${fieldName} is new sort`)
-      }
-      this.updateState()
   }
 
+  /**
+   * onHeaderClick - updates state to reflect a change in sort order. If the
+   * currently-chosen header is clicked, it reverses (from ascending to descending
+   * or vice-versa)
+   *
+   * @param  {Number}   index  the index of the column header that has been clicked
+   */
+  onHeaderClick(index) {
+    let headerName = this.state.headers[index]
+    let fieldName = this.state.fields[index]
+    if (this.state.sortOn == fieldName) {
+      this.state.sortDir = (this.state.sortDir == 'asc') ? 'desc' : 'asc'
+    } else {
+      this.state.sortOn = fieldName
+      this.state.sortDir = 'asc'
+    }
+    this.updateState()
+  }
+
+  /**
+   * onChangeItemsPerPage - updates the view when the user changes the
+   * "items per page" option
+   *
+   * @param  {ReactEvent} event event triggered by a change to the "items per page"
+   */
   onChangeItemsPerPage(event) {
-    this.state.pageSize = parseInt(event.target.value);
+    this.state.pageSize = parseInt(event.target.value)
     let targetPage = this.findPageByItemIndex(this.state.firstItemNum, this.state.pageSize)
     this.state.pageIndex = targetPage - 1
     this.updateState()
-  }//changeItemsPerPage
+  }
 
-  pageBack() {
+  /**
+   * onPageBack - updates the view when the user clicks the back arrow
+   * disallows that action if already on the first page
+   *
+   */
+  onPageBack() {
     this.state.pageIndex = this.boundPageIndex(this.state.pageIndex - 1)
     this.updateState()
-  }//pageBack
+  }
 
-  pageForward() {
-    // console.log("pageForward 1 ", this.state.pageIndex)
+
+  /**
+   * onPageForward - updates the view when the user clicks the forward arrow
+   * disallows that action if already on the last page
+   *
+   */
+  onPageForward() {
     this.state.pageIndex = this.boundPageIndex(this.state.pageIndex + 1)
     this.updateState()
-  }//pageForward
-
+  }
 
   render() {
-    let { data } = this.props;
+    let { data } = this.props
     let dataSize = data.length-1
     let page = this.currentPage
     let headerCells = []
@@ -242,13 +314,14 @@ class Table extends Component {
     // ========== FORMULATE HEADERS ==========
     for (let i=0; i&lt;this.state.headers.length; i++) {
       let header = this.state.headers[i]
+
+      let tempHeader = "table-header" + " foo"
       headerCells.push(&lt;th
-          className="table-header"
+          className={tempHeader}
           key={"header"+header+i}
           onClick={()=>{this.onHeaderClick(i)}}>{header}&lt;/th>)
     }
     let tableHeaderData = &lt;tr key="table-header">{headerCells}&lt;/tr>
-
 
     // ========== FORMULATE ROWS ==========
     let tableRowData = page.map((obj, i) => {
@@ -256,40 +329,50 @@ class Table extends Component {
 
       for(let i=0; i&lt;this.state.fields.length; i++) {
         let field = this.state.fields[i]
-        cells.push(&lt;td key={field+i}>{obj[field]}&lt;/td>)
+        let cellWidth = {
+          width: this.state.columnSizes[i]
+        }
+        cells.push(&lt;td key={field+i} style={cellWidth}>{obj[field]}&lt;/td>)
       }
 
       return &lt;tr key={i}>{cells}&lt;/tr>
-    })//map
-
+    })
 
     return (
       &lt;div>
-        pageIndex: {this.state.pageIndex}&lt;br/>
-        pageSize: {this.state.pageSize}&lt;br/>
-        firstItemNum: {this.state.firstItemNum}&lt;br/>
-        lastItemNum: {this.state.lastItemNum}&lt;br/>
-        this.state.sortDir: {this.state.sortDir}&lt;br/>
         &lt;div className="pagination">
           &lt;div className="container">
-            &lt;span className ="list-header">List of Awesome &lt;/span>
-            &lt;label htmlFor="sort-type" className="sort-type-label">Sort by: &lt;/label>
-            &lt;select id="sort-type" className="sort-type" value={this.state.fields.indexOf(this.state.sortOn)} onChange={this.onChangeSort}>
-              {sortOptions}
-            &lt;/select>
-            &lt;i className="fas fa-sort-down fa-fw">&lt;/i>
-            &lt;label htmlFor="per-page" className="per-page-label">Items per page:&lt;/label>
-            &lt;select id="per-page" className="per-page" value={this.state.pageSize} onChange={this.onChangeItemsPerPage}>
-            {incrementOptions}
-            &lt;/select>
-
-            &lt;i className="fas fa-sort-down fa-fw">&lt;/i>
-            &lt;span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}&lt;/span>&lt;span>  of &lt;/span>&lt;span>{this.numberOfItems}&lt;/span>
-            &lt;button onClick={this.pageBack} disabled={!this.hasPreviousPage}>&lt;i id="prev-arrow" className="fas fa-angle-left arrow page-arrow">&lt;/i>&lt;/button>
-            &lt;button onClick={this.pageForward} disabled={!this.hasNextPage}>&lt;i id="next-arrow" className="fas fa-angle-right arrow page-arrow">&lt;/i>&lt;/button>
-
+            &lt;div className="left-controls">
+              &lt;h2 className ="table-name">List of Awesome&lt;/h2>
+              &lt;div className="sort-type">
+                  &lt;label htmlFor="sort-type-select" className="sort-type-label">Sort by: &lt;/label>
+                  &lt;div className="select-wrapper">
+                    &lt;select id="sort-type-select" className="sort-type-select" value={this.state.fields.indexOf(this.state.sortOn)} onChange={this.onChangeSort}>
+                      {sortOptions}
+                    &lt;/select>
+                &lt;/div>
+              &lt;/div>
+            &lt;/div>
+            &lt;div className="right-controls">
+              &lt;div className="per-page">
+                &lt;label htmlFor="per-page-select" className="per-page-label">Items per page:&lt;/label>
+                &lt;div className="select-wrapper">
+                  &lt;select id="per-page-select" className="per-page-select" value={this.state.pageSize} onChange={this.onChangeItemsPerPage}>
+                    {incrementOptions}
+                  &lt;/select>
+                &lt;/div>
+              &lt;/div>
+              &lt;div className="page-range-status">
+                &lt;span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}&lt;/span>&lt;span> of &lt;/span>&lt;span className="page-range">{this.numberOfItems}&lt;/span>
+              &lt;/div>
+              &lt;div className="page-navigation">
+                &lt;button onClick={this.onPageBack} disabled={!this.hasPreviousPage} className="page-arrow">&lt;i id="prev-arrow" className="fas fa-angle-left">&lt;/i>&lt;/button>
+                &lt;button onClick={this.onPageForward} disabled={!this.hasNextPage} className="page-arrow">&lt;i id="next-arrow" className="fas fa-angle-right">&lt;/i>&lt;/button>
+              &lt;/div>
+            &lt;/div>
           &lt;/div>
         &lt;/div>
+
         &lt;table>
           &lt;thead>
             {tableHeaderData}
@@ -300,9 +383,8 @@ class Table extends Component {
         &lt;/table>
       &lt;/div>
     )
-  }//render
-
-} //class Table
+  }
+}
 
 Table.defaultProps = {
   data: [],
@@ -312,7 +394,7 @@ Table.defaultProps = {
   headers: null,
   pageSize: 10,
   pageIndex: 0
-};
+}
 
 export default Table
 </code></pre>
@@ -331,7 +413,7 @@ export default Table
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Feb 26 2018 22:41:48 GMT-0800 (PST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Feb 27 2018 21:29:46 GMT-0800 (PST)
 </footer>
 
 <script> prettyPrint(); </script>

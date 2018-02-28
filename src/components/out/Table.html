@@ -30,6 +30,8 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>Table<span class="signature">()</span><span class="type-signature"></span></h2>
         
+            <div class="class-description">a React component that provides a reusable, pageable table</div>
+        
     
 </header>
 
@@ -38,6 +40,8 @@
     
         
 
+    
+    <h2>Constructor</h2>
     
 
     
@@ -89,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="table.js.html">table.js</a>, <a href="table.js.html#line11">line 11</a>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -137,13 +141,14 @@
 
         
             
-<h4 class="name" id="numberOfPages"><span class="type-signature"></span>numberOfPages<span class="type-signature"></span></h4>
+<h4 class="name" id="currentPage"><span class="type-signature"></span>currentPage<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    get numberOfPages - description
+    get currentPage -forms a selection of the dataset, based on the current page
+size and sort criteria
 </div>
 
 
@@ -181,7 +186,257 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="table.js.html">table.js</a>, <a href="table.js.html#line64">line 64</a>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line129">line 129</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="hasNextPage"><span class="type-signature"></span>hasNextPage<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    get hasNextPage - checks to see whether there are more pages after the one
+currently in view. For use in disabling/enabling the forward chevron.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line110">line 110</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="hasPreviousPage"><span class="type-signature"></span>hasPreviousPage<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    get hasPreviousPage - checks to see whether there are more pages before the one currently in view. For use in disabling/enabling the backward chevron.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line119">line 119</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="numberOfItems"><span class="type-signature"></span>numberOfItems<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    get numberOfItems - Gets the number of items in a dataset
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line99">line 99</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="numberOfPages"><span class="type-signature"></span>numberOfPages<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    get numberOfPages - determines how many pages there are when a given number
+of items are displayed on each page
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line88">line 88</a>
     </li></ul></dd>
     
 
@@ -217,7 +472,8 @@
 
 
 <div class="description">
-    boundPageIndex - description
+    boundPageIndex - this limits the page index to no more than the total number of
+pages, and no less than the first page
 </div>
 
 
@@ -259,7 +515,7 @@
             <td class="type">
             
                 
-<span class="param-type">type</span>
+<span class="param-type">Number</span>
 
 
             
@@ -269,7 +525,7 @@
 
             
 
-            <td class="description last">description</td>
+            <td class="description last">a page index</td>
         </tr>
 
     
@@ -310,7 +566,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="table.js.html">table.js</a>, <a href="table.js.html#line117">line 117</a>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line159">line 159</a>
     </li></ul></dd>
     
 
@@ -337,7 +593,7 @@
 
         
 <div class="param-desc">
-    description
+    a page index
 </div>
 
 
@@ -374,8 +630,9 @@
 
 
 <div class="description">
-    findPageByItemIndex - returns the page index that contains a given item index,
-based on the given items per page
+    findPageByItemIndex - Given the index of an item from the dataset, this returns
+the index of the page that would contain it were the number of items per-page
+to be changed
 </div>
 
 
@@ -491,7 +748,7 @@ based on the given items per page
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="table.js.html">table.js</a>, <a href="table.js.html#line129">line 129</a>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line172">line 172</a>
     </li></ul></dd>
     
 
@@ -518,7 +775,7 @@ based on the given items per page
 
         
 <div class="param-desc">
-    the index of the page that item would exist on
+    the index of the page that the item would be on
 </div>
 
 
@@ -536,6 +793,675 @@ based on the given items per page
 </dl>
 
     
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onChangeItemsPerPage"><span class="type-signature"></span>onChangeItemsPerPage<span class="signature">(event)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    onChangeItemsPerPage - updates the view when the user changes the
+"items per page" option
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReactEvent</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">event triggered by a change to the "items per page"</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line243">line 243</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onChangeSort"><span class="type-signature"></span>onChangeSort<span class="signature">(event)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    onChangeSort - updates the items in view when the user changes the
+sort order
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">ReactEvent</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">event triggered by a change to the "sort by" listbox</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line210">line 210</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onHeaderClick"><span class="type-signature"></span>onHeaderClick<span class="signature">(index)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    onHeaderClick - updates state to reflect a change in sort order. If the
+currently-chosen header is clicked, it reverses (from ascending to descending
+or vice-versa)
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the index of the column header that has been clicked</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line225">line 225</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onPageBack"><span class="type-signature"></span>onPageBack<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    onPageBack - updates the view when the user clicks the back arrow
+disallows that action if already on the first page
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line255">line 255</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onPageForward"><span class="type-signature"></span>onPageForward<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    onPageForward - updates the view when the user clicks the forward arrow
+disallows that action if already on the last page
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line266">line 266</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="updateState"><span class="type-signature"></span>updateState<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    updateState - updates state when a value changes
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="table.js.html">table.js</a>, <a href="table.js.html#line180">line 180</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -563,7 +1489,7 @@ based on the given items per page
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Feb 26 2018 22:41:48 GMT-0800 (PST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Feb 27 2018 21:29:46 GMT-0800 (PST)
 </footer>
 
 <script> prettyPrint(); </script>
