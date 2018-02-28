@@ -3,53 +3,35 @@
 
 // ===== TABLE NAVIGATION =====
 .pagination {
+  display: flex;
   margin: 0;
   padding: 0 0 10px 0;
   align-items: center;
   font-family: $font;
-  display: flex;
-}
-.container {
-  // border: 1px solid dodgerblue;
-}
-
-.list-header {
-  background-color: $white;
-  font-size: 1rem;
-  font-weight: 400;
-  color: $purple-labels;
-}//list-header
-
-.pipe-divider {
-  color: $grey-pipe;
-  font-weight: 300;
-}
-.sort-type-label, .per-page-label {
-  color: $purple-labels;
-  font-size: .75rem;
-  font-weight: 400;
-}
-
-.sort-type, .per-page {
-  background-color: $white;
-  border: none;
-  color: $blue-dropdown;
-  font-size: .75rem;
-  font-weight: 600;
-}
-.sort-option, .per-page-option {
-  color: $blue-dropdown;
-  font-weight: 400;
-
-  &.bold {
-    font-weight: 600;
-  }
-}
-
-.pagination {
   font-size: .875rem;
   color: $purple-labels;
-  display: flex;
+
+  .sort-type-label, .per-page-label {
+    color: $purple-labels;
+    font-size: .75rem;
+    font-weight: 400;
+  }
+  .sort-type-select, .per-page-select {
+    background-color: $white;
+    color: $blue-dropdown;
+    font-size: .75rem;
+    font-weight: 600;
+  }
+  .sort-option, .per-page-option {
+    border: 1px solid indigo;
+    margin: 5px 5px 5px 5px;
+    color: $blue-dropdown;
+    font-weight: 400;
+
+    &.bold {
+      font-weight: 600;
+    }
+  }
 
   .container {
     border: 1px solid orange;
@@ -60,14 +42,65 @@
 
     .left-controls {
       border: 1px solid dodgerblue;
-      margin: 5px 0 5px 0;
+      margin: 5px 0 5px 5px;
       display: flex;
+      justify-content: flex-start;
+
+      h2.table-name {
+        border: 1px solid indigo;
+        margin: 5px 5px 5px 5px;
+        padding-right: 10px;
+        background-color: $white;
+        font-size: 1rem;
+        font-weight: 400;
+        color: $purple-labels;
+      }//table-name
+
+      .sort-type {
+        border: 1px solid indigo;
+        margin: 5px 5px 5px 5px;
+
+        &.sort-type-label {
+          border: 1px solid maroon;
+          margin: 5px 5px 5px 5px;
+        }
+        &.sort-type-select {
+          border: 1px solid maroon;
+          margin: 5px 5px 5px 5px;
+        }
+        .pipe-divider {
+          color: $grey-pipe;
+          font-weight: 300;
+        }
+
+      }
+
     }
     .right-controls {
       border: 1px solid dodgerblue;
-      margin: 5px 0 5px 0;
+      margin: 5px 5px 5px 0;
       display: flex;
-    }
+      justify-content: flex-end;
+
+      .per-page {
+        border: 1px solid indigo;
+        margin: 5px 5px 5px 5px;
+
+        &.per-page-label {
+          border: 1px solid maroon;
+          margin: 5px 5px 5px 5px;
+        }
+        &.per-page-select {
+          border: 1px solid maroon;
+          margin: 5px 5px 5px 5px;
+        }
+      }
+
+      .page-range-status {
+        border: 1px solid indigo;
+        margin: 5px 5px 5px 5px;
+      }
+    }//.right-controls
   }
   &.bold {
     font-weight: 700;
@@ -84,8 +117,6 @@
   button {
     border: none;
   }
-
-
 }//pagination
 
 

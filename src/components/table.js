@@ -261,25 +261,36 @@ class Table extends Component {
         this.state.sortDir: {this.state.sortDir}<br/>
         <div className="pagination">
           <div className="container">
+
             <div className="left-controls">
-              <span className ="list-header">List of Awesome </span>
-              <label htmlFor="sort-type" className="sort-type-label">Sort by: </label>
-              <select id="sort-type" className="sort-type" value={this.state.fields.indexOf(this.state.sortOn)} onChange={this.onChangeSort}>
-                {sortOptions}
-              </select>
-              <i className="fas fa-sort-down fa-fw arrow"></i>
+
+              <h2 className ="table-name">List of Awesome</h2>
+              <div className="sort-type">
+                <label htmlFor="sort-type-select" className="sort-type-label">Sort by: </label>
+                <select id="sort-type-select" className="sort-type-select" value={this.state.fields.indexOf(this.state.sortOn)} onChange={this.onChangeSort}>
+                  {sortOptions}
+                </select>
+                <i className="fas fa-sort-down fa-fw arrow"></i>
+              </div>
             </div>
 
             <div className="right-controls">
-              <label htmlFor="per-page" className="per-page-label">Items per page:</label>
-              <select id="per-page" className="per-page" value={this.state.pageSize} onChange={this.onChangeItemsPerPage}>
-              {incrementOptions}
-              </select>
-              <i className="fas fa-sort-down fa-fw arrow"></i>
-              <span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}</span><span>  of </span><span>{this.numberOfItems}</span>
 
-              <button onClick={this.onPageBack} disabled={!this.hasPreviousPage}><i id="prev-arrow" className="fas fa-angle-left arrow page-arrow"></i></button>
-              <button onClick={this.onPageForward} disabled={!this.hasNextPage}><i id="next-arrow" className="fas fa-angle-right arrow page-arrow"></i></button>
+              <div className="per-page">
+                <label htmlFor="per-page-select" className="per-page-label">Items per page:</label>
+                <select id="per-page-select" className="per-page-select" value={this.state.pageSize} onChange={this.onChangeItemsPerPage}>
+                  {incrementOptions}
+                </select>
+                <i className="fas fa-sort-down fa-fw arrow"></i>
+              </div>
+
+              <div className="page-range-status">
+                <span className="page-range">{this.state.firstItemNum} - {this.state.lastItemNum}</span><span>  of </span><span>{this.numberOfItems}</span>
+
+                <button onClick={this.onPageBack} disabled={!this.hasPreviousPage}><i id="prev-arrow" className="fas fa-angle-left arrow page-arrow"></i></button>
+                <button onClick={this.onPageForward} disabled={!this.hasNextPage}><i id="next-arrow" className="fas fa-angle-right arrow page-arrow"></i></button>
+              </div>
+
             </div>
 
 
