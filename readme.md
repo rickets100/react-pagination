@@ -23,7 +23,7 @@ Overarching structure was not specified. I chose to create a separate, dummy nav
 
 Behavior when choosing a listbox option was also not given in detail. I choose to implement them as follows: if the user changes the number of items per page, the results will still contain the item that was previously at the top of the page. If the user changes the sort criterion, it starts a fresh search.
 
-Behavior when clicking on a an already-selected column header was not specified in detail. I choose to allow toggling between ascending and descending sort order.
+Behavior when clicking on an already-selected column header was not specified in detail. I choose to allow toggling between ascending and descending sort order.
 
 ## DOCUMENTATION
 JSDoc documentation is available in the src/components/out folder
